@@ -1,0 +1,13 @@
+[type="search"]:focus {
+  outline: none;
+}
+[type="search"] {
+  width: 98%;
+}
+[aria-checked="true"] {
+  background-color: #da005c !important;
+}
+
+[aria-checked="false"] {
+  background-color: #777 !important;
+}

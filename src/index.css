@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.logo-img {
+  width: 30px;
+  height: 30px;
+}
+.main-color {
+  color: #da005c;
+}
+.bg-btn {
+  background-color: #17080e;
+}
