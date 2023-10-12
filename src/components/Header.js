@@ -1,7 +1,7 @@
 import "./Header.css";
 // import { useState } from "react";
 import { Link, useNavigation, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -17,7 +17,7 @@ const MainNav = () => {
   useEffect(() => {
     NProgress.start();
     if (navigation.state === "idle") NProgress.done();
-  }, [location]); // Watch for router location
+  }, [location, navigation.state]); // Watch for router location
 
   return (
     <ConfigProvider
