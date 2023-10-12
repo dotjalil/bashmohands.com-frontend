@@ -96,7 +96,6 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            <span>{"location.state"}</span>
             <Button
               type="default"
               shape="round"
