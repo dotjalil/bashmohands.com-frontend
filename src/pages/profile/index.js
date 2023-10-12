@@ -1,7 +1,3 @@
-import "./Profile.module.css";
-
-const ProfilePage = () => {
+export default function ProfilePage() {
   return <div>Profile Page</div>;
-};
-
-export default ProfilePage;
+}
