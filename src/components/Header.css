@@ -1,0 +1,22 @@
+.ant-menu-horizontal {
+  border-bottom: none;
+}
+
+/** Customize the progress bar
+ * This overrides the node_modules/nprogress/nprogress.css file
+*/
+
+/* Make clicks pass-through */
+#nprogress .bar {
+  background: #da005c !important;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #da005c, 0 0 5px #da005c !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #da005c !important;
+  border-left-color: #da005c !important;
+}
