@@ -3,9 +3,9 @@ import React from "react";
 export const Cards = () => {
   return (
     <div>
-      <div className="border text-center p-3 rounded">
+      <div className="border text-center p-3 rounded up-card">
         <img
-          src="http://via.placeholder.com/328x328"
+          src="http://via.placeholder.com/284x284"
           alt=""
           className="rounded"
         />
@@ -24,14 +24,14 @@ export const Cards = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <p className="bg-slate-300 mt-2 text-left py-2 px-3 rounded-3xl w-fit text-xs">
+          <div className="flex flex-wrap items-center">
+            <p className="details mt-2 text-left py-2 px-3 rounded-3xl w-fit text-xs">
               🔥 Free 30-min session
             </p>
-            <p className="bg-slate-300 mt-2 text-left py-2 px-3 rounded-3xl w-fit text-xs">
+            <p className="details mt-2 text-left py-2 px-3 rounded-3xl w-fit text-xs">
               🧑 Teaching
             </p>
-            <p className="bg-slate-300 mt-2 text-left py-2 px-3 rounded-3xl w-fit text-xs">
+            <p className="details mt-2 text-left py-2 px-3 rounded-3xl w-fit text-xs">
               💼 Career Mentoring
             </p>
             <p className="text-xs text-left mt-2">+10 more...</p>
