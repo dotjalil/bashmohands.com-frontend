@@ -1,7 +1,7 @@
 import "./Header.css";
 // import { useState } from "react";
 import { Link, useNavigation, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -17,7 +17,7 @@ const MainNav = () => {
   useEffect(() => {
     NProgress.start();
     if (navigation.state === "idle") NProgress.done();
-  }, [location]); // Watch for router location
+  }, [location, navigation.state]); // Watch for router location
 
   return (
     <ConfigProvider
@@ -77,13 +77,13 @@ const MainNav = () => {
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/umo" style={{ fontSize: "16px" }}>
-                  Instructors
+                <Link to="/1" style={{ fontSize: "16px" }}>
+                  User
                 </Link>
               </Menu.Item>
               <Menu.Item key="3">
-                <Link to="/uho" style={{ fontSize: "16px" }}>
-                  My Sessions
+                <Link to="/1/account" style={{ fontSize: "16px" }}>
+                  User Account
                 </Link>
               </Menu.Item>
             </Menu>
