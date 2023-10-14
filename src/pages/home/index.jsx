@@ -1,5 +1,8 @@
-import { Button, message } from "antd";
+import { message } from "antd";
 import Search from "../../components/Search";
+import { Slider } from "../../components/Slider";
+import { Cards } from "../../components/Cards";
+import "./index.css";
 
 export default function HomePage() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -17,12 +20,16 @@ export default function HomePage() {
 
   return (
     <div style={{ paddingTop: "65px" }}>
-      <h1 style={{ fontSize: "34px", marginBottom: "32px" }}>
+      <h1
+        style={{ fontSize: "34px", marginBottom: "32px" }}
+        className="heading"
+      >
         Search instructors
       </h1>
       <Search />
-      {contextHolder}
-      <Button onClick={showNotification}>Click me</Button>
+      <Slider />
+      <Cards />
+      <button className="card-btn">Load more instructors</button>
     </div>
   );
 }

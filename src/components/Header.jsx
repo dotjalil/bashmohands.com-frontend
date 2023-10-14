@@ -1,15 +1,18 @@
 import "./Header.css";
 // import { useState } from "react";
 import { Link, useNavigation, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
-import { Layout, Menu, ConfigProvider, Row, Col, Button } from "antd";
+import { Layout, Menu, ConfigProvider, Row, Col, Button, Drawer } from "antd";
+import { ProfileHeader } from "./ProfileHeader";
+import { MenuOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 const MainNav = () => {
+  const [openMenu, setOpenMenu] = useState(false);
   // Routing progress bar setup
   const navigation = useNavigation();
   const location = useLocation();
@@ -57,6 +60,7 @@ const MainNav = () => {
                   src="/bashmohands-logo.svg"
                   width="277"
                   height="auto"
+                  className="logo"
                 />
               </Link>
             </div>
@@ -71,7 +75,7 @@ const MainNav = () => {
                 justifyContent: "center",
               }}
             >
-              <Menu.Item key="1">
+              <Menu.Item key="1" className="links">
                 <Link to="/" style={{ fontSize: "16px" }}>
                   Home
                 </Link>
@@ -96,29 +100,39 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            <Button
-              type="default"
-              shape="round"
-              size={"small"}
-              style={{
-                display: "flex",
-                paddingLeft: "15px",
-                gap: "5px",
-                height: "46px",
-                alignItems: "center",
-                padding: "5px",
-                paddingRight: "15px",
+            <ProfileHeader />
+            <Drawer
+              className="drow"
+              open={openMenu}
+              closable={true}
+              onClose={() => {
+                setOpenMenu(false);
               }}
             >
-              <img
-                alt="avatar"
-                src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-                width={35}
-                height={35}
-                style={{ borderRadius: "35px" }}
-              />
-              Mohamed Abduljalil
-            </Button>
+              <Menu mode="vertical" defaultSelectedKeys={["1"]}>
+                <Menu.Item key="1">
+                  <Link to="/" style={{ fontSize: "16px" }}>
+                    Home
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link to="/umo" style={{ fontSize: "16px" }}>
+                    Instructors
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link to="/uho" style={{ fontSize: "16px" }}>
+                    My Sessions
+                  </Link>
+                </Menu.Item>
+              </Menu>
+            </Drawer>
+            <MenuOutlined
+              className="bars"
+              onClick={() => {
+                setOpenMenu(true);
+              }}
+            />
           </Col>
         </Row>
       </Header>
