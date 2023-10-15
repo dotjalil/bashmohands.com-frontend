@@ -7,6 +7,9 @@ import Account, { accountDataLoader } from "./pages/account";
 import AboutPage from "./pages/about";
 import AllSessions from "./pages/session/AllSessions";
 import SingleSession from "./pages/session/SingleSession";
+import SignupPage from "./pages/signup";
+import LoginPage from "./pages/login";
+import { checkAuthLoader } from "./app/model/auth";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage />, loader: homePageLoader },
       { path: "/about", element: <AboutPage /> },
+      { path: "/signup", element: <SignupPage /> },
+      { path: "/login", element: <LoginPage /> },
     ],
   }, // End Home & General Pages
   {
@@ -25,6 +30,7 @@ const router = createBrowserRouter([
     path: "/:handler/account",
     element: <BaseLayout />,
     errorElement: <NotFound />,
+    loader: checkAuthLoader,
     children: [
       { index: true, element: <Account />, loader: accountDataLoader },
       { path: "/:handler/account/sessions", element: <AllSessions /> },
