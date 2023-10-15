@@ -2,30 +2,31 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProfilePage from "./pages/profile";
 import BaseLayout from "./app/layouts/baseLayout";
 import NotFound from "./pages/404";
-import HomePage from "./pages/home";
-import Account from "./pages/account";
+import HomePage, { homePageLoader } from "./pages/home";
+import Account, { accountDataLoader } from "./pages/account";
 import AboutPage from "./pages/about";
 import AllSessions from "./pages/session/AllSessions";
 import SingleSession from "./pages/session/SingleSession";
 
 const router = createBrowserRouter([
   {
-    // Home & General Pages
+    // Home & General Pages because no auth needed
     path: "/",
     element: <BaseLayout />,
     errorElement: <NotFound />,
+
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: homePageLoader },
       { path: "/about", element: <AboutPage /> },
     ],
   }, // End Home & General Pages
   {
-    // Protected Pages
+    // Protected Pages & is related to user profile
     path: "/:handler/account",
     element: <BaseLayout />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <Account /> },
+      { index: true, element: <Account />, loader: accountDataLoader },
       { path: "/:handler/account/sessions", element: <AllSessions /> },
       { path: "/:handler/account/session/:id", element: <SingleSession /> },
     ],
