@@ -7,6 +7,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 import { Layout, Menu, ConfigProvider, Row, Col, Button } from "antd";
+import { UserHeaderBtn } from "../shared/ui";
 const { Header } = Layout;
 
 const MainNav = () => {
@@ -96,29 +97,7 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            <Button
-              type="default"
-              shape="round"
-              size={"small"}
-              style={{
-                display: "flex",
-                paddingLeft: "15px",
-                gap: "5px",
-                height: "46px",
-                alignItems: "center",
-                padding: "5px",
-                paddingRight: "15px",
-              }}
-            >
-              <img
-                alt="avatar"
-                src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-                width={35}
-                height={35}
-                style={{ borderRadius: "35px" }}
-              />
-              Mohamed Abduljalil
-            </Button>
+            {/* <UserHeaderBtn /> */}
           </Col>
         </Row>
       </Header>
