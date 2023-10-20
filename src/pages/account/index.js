@@ -1,4 +1,4 @@
-import supabase from "../../shared/model/Supabase";
+import supabase from "../../shared/model/supabase";
 import { useLoaderData } from "react-router-dom";
 
 export default function Account() {

@@ -1,22 +1,18 @@
 import { redirect } from "react-router-dom";
 
 export function getAuthToken() {
-  // const token = localStorage.getItem("a_token");
-  const token = "hi";
+  const token = localStorage.getItem("token");
   return token;
 }
 
 export function tokenLoader() {
-  //   return getAuthToken();
+  return getAuthToken();
 }
 
-export function checkAuthLoader() {
-  console.log("auth loader");
+export function checkAuthLoader({ request }) {
   const token = getAuthToken();
-
   if (!token) {
-    return redirect("/signup");
+    return redirect(`/signup?redirect=${request.url}`);
   }
-
-  return true;
+  return null;
 }

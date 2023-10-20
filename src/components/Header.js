@@ -7,7 +7,8 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 import { Layout, Menu, ConfigProvider, Row, Col, Button } from "antd";
-import { UserHeaderBtn } from "../shared/ui";
+import { ButtonOutlined, UserHeaderBtn } from "../shared/ui";
+import { ButtonBlack } from "../shared/ui/ButtonBlack";
 const { Header } = Layout;
 
 const MainNav = () => {
@@ -98,6 +99,10 @@ const MainNav = () => {
             }}
           >
             {/* <UserHeaderBtn /> */}
+            <div className="authHeaderBtns">
+              <ButtonOutlined to="/login">Login</ButtonOutlined>
+              <ButtonBlack to="/signup">Signup</ButtonBlack>
+            </div>
           </Col>
         </Row>
       </Header>

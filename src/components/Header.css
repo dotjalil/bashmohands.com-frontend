@@ -20,3 +20,8 @@
   border-top-color: #da005c !important;
   border-left-color: #da005c !important;
 }
+
+.authHeaderBtns {
+  display: flex;
+  gap: 20px;
+}
