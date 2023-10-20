@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./Cards.css";
 import { Card } from "antd";
+import { Filter } from "./FilterSlider";
 const { Meta } = Card;
 
 export const Cards = () => {
@@ -20,9 +21,13 @@ export const Cards = () => {
   }, []);
   return (
     <div className="cards">
-      {users.map((user) => {
+      {users.map((user, index) => {
         return (
-          <Card hoverable cover={<img alt="example" src={user.profile_pic} />}>
+          <Card
+            hoverable
+            cover={<img alt="example" src={user.profile_pic} />}
+            key={index}
+          >
             <Meta title={`${user.first_name} ${user.last_name}`} />
             <p className="jopTitle">{user.job_title}</p>
             <div className="child">

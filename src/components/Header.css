@@ -25,7 +25,9 @@
   margin-left: 15px !important;
   font-size: 25px !important;
 }
-
+.ant-drawer-body ul {
+  border: none !important;
+}
 @media (min-width: 992px) {
   .ant-col ul {
     display: flex;
@@ -48,5 +50,8 @@
   }
   .bars {
     font-size: 18px !important;
+  }
+  .ant-layout-header {
+    height: 65px !important;
   }
 }

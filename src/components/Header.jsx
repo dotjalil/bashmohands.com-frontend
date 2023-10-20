@@ -93,6 +93,7 @@ const MainNav = () => {
             </Menu>
           </Col>
           <Col
+            className="profile-nav"
             span={8}
             style={{
               display: "flex",

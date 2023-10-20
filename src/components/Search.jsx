@@ -1,6 +1,7 @@
 import React from "react";
 import "./Search.css";
 import { Switch } from "antd";
+import { Filter } from "./FilterSlider";
 
 const Search = () => {
   return (
@@ -14,8 +15,7 @@ const Search = () => {
         <Switch defaultChecked />
       </div>
       <div className="filter">
-        <img src="imgs/1.svg" alt="icon" />
-        <p>Filter</p>
+        <Filter />
       </div>
     </div>
   );

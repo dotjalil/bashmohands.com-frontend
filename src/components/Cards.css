@@ -70,4 +70,13 @@ p.jopTitle {
     justify-content: center;
     align-items: center;
   }
+  .ant-card {
+    width: 72% !important;
+  }
+  .child {
+    width: 100%;
+  }
+  .ant-col {
+    bottom: 18px !important;
+  }
 }

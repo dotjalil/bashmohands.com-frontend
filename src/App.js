@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ProfilePage from "./pages/profile";
+import { ProfilePage } from "./pages/profile";
 import BaseLayout from "./app/layouts/baseLayout";
 import NotFound from "./pages/404";
 import HomePage from "./pages/home";
