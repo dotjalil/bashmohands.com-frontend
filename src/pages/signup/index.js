@@ -1,45 +1,128 @@
+import "./Style.css";
+import { LockOutlined } from "@ant-design/icons";
+import { Button, Form as AntForm, Input } from "antd";
+import {
+  Link,
+  Form,
+  json,
+  redirect,
+  useNavigation,
+  useSearchParams,
+} from "react-router-dom";
+
 export default function SignupPage() {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  const [searchParams] = useSearchParams();
+  const redirection = searchParams.get("redirect");
+
   return (
     <>
-      {/* TODO
-            1. Add signup form: first name, last name, email address, password
-            2. Add login link: redirect to /login
-            3. Submit user's data via the action below.
-        */}
+      <Form
+        method="POST"
+        action={`/signup?redirect=${redirection}`}
+        className="signupForm"
+      >
+        <AntForm.Item style={{ marginBottom: 0 }}>
+          <AntForm.Item
+            label="First Name"
+            rules={[{ required: true }]}
+            style={{ display: "inline-block", width: "calc(50% - 8px)" }}
+          >
+            <Input placeholder="Your first name" name="firstName" />
+          </AntForm.Item>
+          <AntForm.Item
+            label="Last Name"
+            rules={[{ required: true }]}
+            style={{
+              display: "inline-block",
+              width: "calc(50%)",
+              margin: "0 8px",
+              marginRight: "0",
+            }}
+          >
+            <Input placeholder="Your last name" name="lastName" />
+          </AntForm.Item>
+        </AntForm.Item>
+        <AntForm.Item
+          name="email"
+          label="Email"
+          rules={[{ required: true, message: "Please enter your email!" }]}
+        >
+          <Input type="email" name="email" placeholder="Enter your email" />
+        </AntForm.Item>
+        <AntForm.Item
+          label="Your username"
+          rules={[{ required: true, message: "Please enter unique username!" }]}
+        >
+          <Input type="text" name="handler" placeholder="Must be unique" />
+        </AntForm.Item>
+
+        <AntForm.Item
+          label="Password"
+          rules={[{ required: true, message: "Enter Password!" }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+          />
+        </AntForm.Item>
+        <AntForm.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            style={{ marginRight: "16px" }}
+            disabled={isSubmitting}
+          >
+            {isSubmitting && "Submitting"}
+            {!isSubmitting && "Submit"}
+          </Button>
+          Do you have an account?{" "}
+          <Link to={`/login?redirect=${redirection}`}>Login!</Link>
+        </AntForm.Item>
+      </Form>
+      {/* </AntForm> */}
     </>
   );
 }
 
-export async function action({ request /** you'll need this */ }) {
-  /**
-   * What's an action function?
-   * Using simple words, an action is a function that fires automatically, by react-router-dom,
-   * when a non-get request, post/put/delete, is sent to your router.
-   *
-   * Suppose we want to submit the signup form to the server, you will
-   * need to handle a post request sent via your registeration form.
-   * You can use the action to submit these data.
-   */
-  /**
-   * STEP 1. extract data from the user's request object
-   * STEP 2. construct the response object
-   * STEP 3. respond to unvalid requests
-   */
-  /** The following lines will be uncommented after you implement the response object */
-  //   if (response.status === 422 || response.status === 401) {
-  //     return response;
-  //   }
-  //   if (!response.ok) {
-  //     throw json({ message: "Could not authenticate user." }, { status: 500 });
-  //   }
-  /**
-     * EXTRA
-     * If you want to use search params inside this function,
-     *  use the, native JavaScript, URL constructor.
-     *  As the example below:
-     *      const searchParams = new URL(request.url).searchParams;
-            const mode = searchParams.get('mode') || 'login';
-     */
-  // soon: manage that token
-  //   return redirect('/');
+export async function signupAction({ request }) {
+  const data = Object.fromEntries(await request.formData());
+  console.log(JSON.stringify(data));
+
+  // catch the redirection url after signup
+  const searchParams = new URL(request.url).searchParams;
+  const redirection = searchParams.get("redirect");
+
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_API}user/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (response.status === 422 || response.status === 401) {
+    return response;
+  }
+
+  if (!response.ok) {
+    throw json({ message: "Could not authenticate user." }, { status: 500 });
+  }
+
+  const resData = await response.json();
+  const token = resData.data.token;
+
+  // Set expiration date to token
+  const ttl = 7; // in days
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + ttl * 24);
+
+  localStorage.setItem("token", token);
+  localStorage.setItem("expiration", expiration.toISOString());
+
+  return redirect(redirection);
 }

@@ -1,7 +1,7 @@
 // import {  message } from "antd";
 import Search from "../../components/Search";
 import { useLoaderData } from "react-router-dom";
-import supabase from "../../shared/model/Supabase";
+import supabase from "../../shared/model/supabase";
 import UserList from "../../components/UserList";
 
 export default function HomePage() {

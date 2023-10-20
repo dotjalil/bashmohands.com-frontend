@@ -7,6 +7,8 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 import { Layout, Menu, ConfigProvider, Row, Col, Button } from "antd";
+import { ButtonOutlined, UserHeaderBtn } from "../shared/ui";
+import { ButtonBlack } from "../shared/ui/ButtonBlack";
 const { Header } = Layout;
 
 const MainNav = () => {
@@ -96,29 +98,11 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            <Button
-              type="default"
-              shape="round"
-              size={"small"}
-              style={{
-                display: "flex",
-                paddingLeft: "15px",
-                gap: "5px",
-                height: "46px",
-                alignItems: "center",
-                padding: "5px",
-                paddingRight: "15px",
-              }}
-            >
-              <img
-                alt="avatar"
-                src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-                width={35}
-                height={35}
-                style={{ borderRadius: "35px" }}
-              />
-              Mohamed Abduljalil
-            </Button>
+            {/* <UserHeaderBtn /> */}
+            <div className="authHeaderBtns">
+              <ButtonOutlined to="/login">Login</ButtonOutlined>
+              <ButtonBlack to="/signup">Signup</ButtonBlack>
+            </div>
           </Col>
         </Row>
       </Header>

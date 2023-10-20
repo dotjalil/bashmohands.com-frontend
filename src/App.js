@@ -7,8 +7,8 @@ import Account, { accountDataLoader } from "./pages/account";
 import AboutPage from "./pages/about";
 import AllSessions from "./pages/session/AllSessions";
 import SingleSession from "./pages/session/SingleSession";
-import SignupPage from "./pages/signup";
-import LoginPage from "./pages/login";
+import SignupPage, { signupAction } from "./pages/signup";
+import LoginPage, { loginFormAction } from "./pages/login";
 import { checkAuthLoader } from "./app/model/auth";
 
 const router = createBrowserRouter([
@@ -17,12 +17,20 @@ const router = createBrowserRouter([
     path: "/",
     element: <BaseLayout />,
     errorElement: <NotFound />,
-
+    loader: () => {
+      console.log("loader 1");
+      return "loggedin";
+      // return null;
+    },
     children: [
-      { index: true, element: <HomePage />, loader: homePageLoader },
+      {
+        index: true,
+        element: <HomePage />,
+        loader: homePageLoader,
+      },
       { path: "/about", element: <AboutPage /> },
-      { path: "/signup", element: <SignupPage /> },
-      { path: "/login", element: <LoginPage /> },
+      { path: "/signup", element: <SignupPage />, action: signupAction },
+      { path: "/login", element: <LoginPage />, action: loginFormAction },
     ],
   }, // End Home & General Pages
   {
@@ -30,9 +38,8 @@ const router = createBrowserRouter([
     path: "/:handler/account",
     element: <BaseLayout />,
     errorElement: <NotFound />,
-    loader: checkAuthLoader,
     children: [
-      { index: true, element: <Account />, loader: accountDataLoader },
+      { index: true, element: <Account />, loader: checkAuthLoader },
       { path: "/:handler/account/sessions", element: <AllSessions /> },
       { path: "/:handler/account/session/:id", element: <SingleSession /> },
     ],
