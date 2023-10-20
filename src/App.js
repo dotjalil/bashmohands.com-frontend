@@ -3,7 +3,7 @@ import ProfilePage from "./pages/profile";
 import BaseLayout from "./app/layouts/baseLayout";
 import NotFound from "./pages/404";
 import HomePage, { homePageLoader } from "./pages/home";
-import Account, { accountDataLoader } from "./pages/account";
+import Account from "./pages/account";
 import AboutPage from "./pages/about";
 import AllSessions from "./pages/session/AllSessions";
 import SingleSession from "./pages/session/SingleSession";
