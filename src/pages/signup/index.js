@@ -124,5 +124,9 @@ export async function signupAction({ request }) {
   localStorage.setItem("token", token);
   localStorage.setItem("expiration", expiration.toISOString());
 
-  return redirect(redirection);
+  if (redirection && redirection !== "null") {
+    return redirect(redirection);
+  } else {
+    return redirect("/");
+  }
 }

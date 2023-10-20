@@ -69,7 +69,6 @@ export async function loginFormAction({ request }) {
   const data = Object.fromEntries(await request.formData());
   const searchParams = new URL(request.url).searchParams;
   const redirection = searchParams.get("redirect");
-  console.log("redir", redirection);
 
   const response = await fetch(
     `${process.env.REACT_APP_BACKEND_API}auth/signin/`,
@@ -103,5 +102,10 @@ export async function loginFormAction({ request }) {
   localStorage.setItem("token", token);
   localStorage.setItem("expiration", expiration.toISOString());
 
-  return redirect(redirection);
+  if (redirection && redirection !== "null") {
+    // when the ?redirect= is not empty
+    return redirect(redirection);
+  } else {
+    return redirect("/");
+  }
 }
