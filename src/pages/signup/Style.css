@@ -1,0 +1,11 @@
+.signupForm {
+  max-width: 420px;
+  margin: 65px auto;
+}
+.signupForm .ant-form-item-row {
+  display: flex;
+  flex-direction: column;
+}
+.signupForm .ant-form-item .ant-form-item-label {
+  text-align: start;
+}
