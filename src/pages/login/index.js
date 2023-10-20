@@ -69,6 +69,7 @@ export async function loginFormAction({ request }) {
   const data = Object.fromEntries(await request.formData());
   const searchParams = new URL(request.url).searchParams;
   const redirection = searchParams.get("redirect");
+  console.log("redir", redirection);
 
   const response = await fetch(
     `${process.env.REACT_APP_BACKEND_API}auth/signin/`,
