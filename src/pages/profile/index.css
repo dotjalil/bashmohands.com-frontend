@@ -133,7 +133,9 @@
 .exp {
   width: 50%;
 }
-
+.about-exp {
+  padding-bottom: 300px;
+}
 @media (min-width: 767px) {
   .read-more {
     display: none;
@@ -211,6 +213,7 @@
     background: none;
     color: #5a5a5a;
     font-size: 16px;
+    padding: 0;
   }
   .heddin-txt {
     display: none;

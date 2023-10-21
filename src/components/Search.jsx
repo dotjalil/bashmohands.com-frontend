@@ -12,7 +12,7 @@ const Search = () => {
       </div>
       <div className="available">
         <h5>Show only available instructors</h5>
-        <Switch defaultChecked />
+        <Switch />
       </div>
       <div className="filter">
         <Filter />
