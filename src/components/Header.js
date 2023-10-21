@@ -23,6 +23,7 @@ const MainNav = () => {
 
   // check if login token exists
   const authData = useRouteLoaderData("root");
+  console.log("inside header", authData);
 
   useEffect(() => {
     NProgress.start();
