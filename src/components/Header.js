@@ -23,7 +23,6 @@ const MainNav = () => {
 
   // check if login token exists
   const authData = useRouteLoaderData("root");
-  console.log("inside header", authData);
 
   useEffect(() => {
     NProgress.start();
@@ -107,14 +106,14 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            {authData && authData.token && (
+            {authData && authData.token && authData.user && (
               <UserHeaderBtn
                 firstName={authData.user.firstName}
                 lastName={authData.user.lastName}
                 photo={authData.user.photo}
               />
             )}
-            {(!authData || !authData.token) && (
+            {(!authData || !authData.token || !authData.user) && (
               <div className="authHeaderBtns">
                 <ButtonOutlined to="/login">Login</ButtonOutlined>
                 <ButtonBlack to="/signup">Signup</ButtonBlack>

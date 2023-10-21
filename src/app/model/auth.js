@@ -5,7 +5,6 @@ export function getAuthData() {
     token: localStorage.getItem("token"),
     user: JSON.parse(localStorage.getItem("user")),
   };
-  console.log("getAuthData", authData);
   return authData;
 }
 
