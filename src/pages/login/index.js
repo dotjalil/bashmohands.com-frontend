@@ -92,6 +92,7 @@ export async function loginFormAction({ request }) {
   }
 
   const resData = await response.json();
+  const user = resData.data.user;
   const token = resData.data.token;
 
   // Set expiration date to token
@@ -100,6 +101,7 @@ export async function loginFormAction({ request }) {
   expiration.setHours(expiration.getHours() + ttl * 24);
 
   localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("expiration", expiration.toISOString());
 
   if (redirection && redirection !== "null") {

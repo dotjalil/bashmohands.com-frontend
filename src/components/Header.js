@@ -1,6 +1,11 @@
 import "./Header.css";
 // import { useState } from "react";
-import { Link, useNavigation, useLocation } from "react-router-dom";
+import {
+  Link,
+  useNavigation,
+  useLocation,
+  useRouteLoaderData,
+} from "react-router-dom";
 import { useEffect } from "react";
 
 import NProgress from "nprogress";
@@ -15,6 +20,9 @@ const MainNav = () => {
   // Routing progress bar setup
   const navigation = useNavigation();
   const location = useLocation();
+
+  // check if login token exists
+  const authData = useRouteLoaderData("root");
 
   useEffect(() => {
     NProgress.start();
@@ -98,11 +106,19 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            {/* <UserHeaderBtn /> */}
-            <div className="authHeaderBtns">
-              <ButtonOutlined to="/login">Login</ButtonOutlined>
-              <ButtonBlack to="/signup">Signup</ButtonBlack>
-            </div>
+            {authData && authData.token && (
+              <UserHeaderBtn
+                firstName={authData.user.firstName}
+                lastName={authData.user.lastName}
+                photo={authData.user.photo}
+              />
+            )}
+            {(!authData || !authData.token) && (
+              <div className="authHeaderBtns">
+                <ButtonOutlined to="/login">Login</ButtonOutlined>
+                <ButtonBlack to="/signup">Signup</ButtonBlack>
+              </div>
+            )}
           </Col>
         </Row>
       </Header>

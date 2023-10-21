@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { ConfigProvider, Layout } from "antd";
-import Header from "../../components/Header";
+import MainNav from "../../components/Header";
 
 const { Content } = Layout;
 
@@ -19,7 +19,7 @@ export default function BaseLayout() {
           },
         }}
       >
-        <Header />
+        <MainNav />
         <Content style={{ paddingLeft: "50px", paddingRight: "50px" }}>
           <Outlet />
         </Content>
