@@ -111,6 +111,7 @@ const MainNav = () => {
                 firstName={authData.user.firstName}
                 lastName={authData.user.lastName}
                 photo={authData.user.photo}
+                handler={authData.user.handler}
               />
             )}
             {(!authData || !authData.token || !authData.user) && (

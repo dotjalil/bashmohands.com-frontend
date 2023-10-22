@@ -10,6 +10,7 @@ import SingleSession from "./pages/session/SingleSession";
 import SignupPage, { signupAction } from "./pages/signup";
 import LoginPage, { loginFormAction } from "./pages/login";
 import { checkAuthLoader, userAuthLoader } from "./app/model/auth";
+import AccountLayout from "./app/layouts/accountLayout";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       {
         // Protected Pages & is related to user profile
         path: "/:handler/account",
+        element: <AccountLayout />,
         errorElement: <NotFound />,
         children: [
           { index: true, element: <Account />, loader: checkAuthLoader },
