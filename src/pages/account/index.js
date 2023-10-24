@@ -1,11 +1,24 @@
-import { Button, Table, Tag, Flex, Avatar, ConfigProvider } from "antd";
+import {
+  Button,
+  Table,
+  Tag,
+  Flex,
+  Avatar,
+  ConfigProvider,
+  Drawer,
+  Space,
+} from "antd";
 import { Link, useRouteLoaderData } from "react-router-dom";
 import AttendeesAvatars from "../../shared/ui/loggedin/AttendeesAvatars";
+import { useState } from "react";
+import SessionDetails from "../../components/SessionDrawer";
 
 const { Column } = Table;
 
 export default function Account() {
   const { user } = useRouteLoaderData("root");
+  const [open, setOpen] = useState(false);
+  const drawerOnOff = () => setOpen(!open);
 
   return (
     <div>
@@ -14,13 +27,14 @@ export default function Account() {
       <Link to="/">
         <Button>Browse Instructors</Button>
       </Link>
-      <UpcomingSessions />
+      <UpcomingSessions drawerOnOff={drawerOnOff} />
       <BookmarkedConnections />
+      <SessionDetails open={open} drawerOnOff={drawerOnOff} />
     </div>
   );
 }
 
-function UpcomingSessions() {
+function UpcomingSessions({ drawerOnOff }) {
   const sessions = [
     {
       id: 1,
@@ -28,7 +42,6 @@ function UpcomingSessions() {
         firstName: "Mona",
         handler: "instructorHandler",
         avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=3",
-        topics: ["JavaScript", "ReactJS"],
       },
       attendees: [
         {
@@ -37,6 +50,7 @@ function UpcomingSessions() {
           // avatar: "attendeeAvatar",
         },
       ],
+      topics: ["JavaScript", "ReactJS"],
     },
   ];
   const sessionsData = sessions.map((session, i) => {
@@ -48,11 +62,11 @@ function UpcomingSessions() {
         />
       ),
 
-      topics: session.instructor.topics,
+      topics: session.topics,
       action: (
-        <Link to={`/session/${session.id}`}>
-          <Button>Session details</Button>
-        </Link>
+        // <Link to={`/session/${session.id}`}>
+        <Button onClick={drawerOnOff}>Session details</Button>
+        // </Link>
       ),
     };
   });
@@ -70,7 +84,7 @@ function UpcomingSessions() {
           key="attendees"
         />
         <Column
-          title="Instructor's Experience"
+          title="Session Topics"
           dataIndex="topics"
           key="topics"
           render={(topics) => (

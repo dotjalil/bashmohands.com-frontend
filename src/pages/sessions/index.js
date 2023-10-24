@@ -6,10 +6,15 @@ import {
 } from "@ant-design/icons";
 import { Link, useRouteLoaderData } from "react-router-dom";
 import AttendeesAvatars from "../../shared/ui/loggedin/AttendeesAvatars";
+import SessionDetails from "../../components/SessionDrawer";
+import { useState } from "react";
 
 const { Column } = Table;
 
 export default function SessionsPage() {
+  const [open, setOpen] = useState(false);
+  const drawerOnOff = () => setOpen(!open);
+
   const sessions = [
     {
       id: 1,
@@ -74,12 +79,13 @@ export default function SessionsPage() {
     <>
       <h1>Sessions</h1>
       <p>You don't have any sessions to attend/give</p>
-      <AllSessions sessions={sessions} />
+      <AllSessions sessions={sessions} onDetails={drawerOnOff} />
+      <SessionDetails open={open} drawerOnOff={drawerOnOff} />
     </>
   );
 }
 
-function AllSessions({ sessions }) {
+function AllSessions({ sessions, onDetails }) {
   const { user } = useRouteLoaderData("root");
 
   const sessionsData = sessions.map((session, i) => {
@@ -96,9 +102,9 @@ function AllSessions({ sessions }) {
       time: session.time,
       status: <SessionStatus status={session.status} />,
       action: (
-        <Link to={`/${user.handler}/session/${session.id}`}>
-          <Button>Details</Button>
-        </Link>
+        // <Link to={`/${user.handler}/session/${session.id}`}>
+        <Button onClick={onDetails}>Details</Button>
+        // </Link>
       ),
     };
   });
