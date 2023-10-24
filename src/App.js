@@ -3,14 +3,22 @@ import ProfilePage from "./pages/profile";
 import BaseLayout from "./app/layouts/baseLayout";
 import NotFound from "./pages/404";
 import HomePage, { homePageLoader } from "./pages/home";
-import Account from "./pages/account";
+import AccountPage from "./pages/account";
 import AboutPage from "./pages/about";
-import AllSessions from "./pages/session/AllSessions";
-import SingleSession from "./pages/session/SingleSession";
+import SessionsPage from "./pages/sessions";
+import SessionPage from "./pages/session";
 import SignupPage, { signupAction } from "./pages/signup";
 import LoginPage, { loginFormAction } from "./pages/login";
-import { checkAuthLoader, userAuthLoader } from "./app/model/auth";
+import ProfileSettingsPage from "./pages/myProfile";
+import AccountSettingsPage from "./pages/accountSettings";
+
+import {
+  checkAuthLoader,
+  isAuthMineLoader,
+  userAuthLoader,
+} from "./app/model/auth";
 import AccountLayout from "./app/layouts/accountLayout";
+import { ConfigProvider } from "antd";
 
 const router = createBrowserRouter([
   {
@@ -34,10 +42,22 @@ const router = createBrowserRouter([
         path: "/:handler/account",
         element: <AccountLayout />,
         errorElement: <NotFound />,
+        loader: isAuthMineLoader,
         children: [
-          { index: true, element: <Account />, loader: checkAuthLoader },
-          { path: "/:handler/account/sessions", element: <AllSessions /> },
-          { path: "/:handler/account/session/:id", element: <SingleSession /> },
+          {
+            index: true,
+            element: <AccountPage />,
+          },
+          { path: "/:handler/account/sessions", element: <SessionsPage /> },
+          { path: "/:handler/account/session/:id", element: <SessionPage /> },
+          {
+            path: "/:handler/account/settings",
+            element: <AccountSettingsPage />,
+          },
+          {
+            path: "/:handler/account/profile",
+            element: <ProfileSettingsPage />,
+          },
         ],
       }, // End Protected Pages
       {
@@ -51,7 +71,21 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          // Seed Token
+          colorPrimary: "#DA005C",
+          colorLink: "#DA005C",
+          // Alias Token
+          // colorBgContainer: "#f6ffed",
+        },
+      }}
+    >
+      <RouterProvider router={router} />
+    </ConfigProvider>
+  );
 }
 
 export default App;

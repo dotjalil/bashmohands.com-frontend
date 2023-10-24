@@ -1,10 +1,23 @@
 import { Outlet, useNavigate, useRouteLoaderData } from "react-router";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import {
+  Breadcrumb,
+  Col,
+  Flex,
+  Layout,
+  Menu,
+  Row,
+  theme,
+  Avatar,
+  ConfigProvider,
+} from "antd";
 import {
   HomeOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
+  UserOutlined,
+  CalendarOutlined,
+  SettingOutlined,
+  AntDesignOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -12,25 +25,34 @@ export default function AccountLayout() {
   const navigate = useNavigate();
   const { user } = useRouteLoaderData("root");
 
-  function getItem(label, key, icon, children) {
-    return { key, icon, children, label };
-  }
-
   const items = [
-    getItem("Home", `/${user.handler}/account`, <HomeOutlined />),
-    getItem(
-      "Sessions",
-      `/${user.handler}/account/sessions`,
-      <DesktopOutlined />
-    ),
-    getItem("Test", "1", <DesktopOutlined />),
+    {
+      label: "Home",
+      key: `/${user.handler}/account`,
+      icon: <HomeOutlined />,
+    },
+    {
+      label: "Sessions",
+      key: `/${user.handler}/account/sessions`,
+      icon: <CalendarOutlined />,
+    },
+    {
+      label: "My Profile",
+      key: `/${user.handler}/account/profile`,
+      icon: <UserOutlined />,
+    },
+    {
+      label: "Settings",
+      key: `/${user.handler}/account/settings`,
+      icon: <SettingOutlined />,
+    },
   ];
 
   return (
     <>
       <Layout
         style={{
-          maxWidth: "1250px",
+          maxWidth: "1150px",
           margin: "0 auto",
           padding: "0",
           background: "#ffffff",
@@ -38,35 +60,64 @@ export default function AccountLayout() {
       >
         <Sider
           style={{
-            borderRight: "1px solid #F1F1F1",
-            padding: "65px 25px 0 0",
+            top: "100px",
             background: "#ffffff",
-            height: "100%",
+            position: "sticky",
+            overflowY: "auto",
+            padding: "36px 20px 0 0",
+            height: "calc(100vh - 100px)",
+            borderRight: "1px solid #EEEEEE",
           }}
-          width={200}
+          width={290}
         >
-          <Menu
-            mode="inline"
-            style={{ height: "100%", border: "none" }}
-            items={items}
-            defaultSelectedKeys={[`/${user.handler}/account`]}
-            onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
-              console.log(
-                "menu",
-                "key",
-                key,
-                "keypath",
-                keyPath,
-                "selectedkeys",
-                selectedKeys,
-                "domevent",
-                domEvent
-              );
-              navigate(key);
+          <Flex vertical={false} style={{ marginBottom: "12px" }}>
+            <Avatar
+              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 75, xxl: 100 }}
+              src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
+            />
+            <Flex vertical={true} justify="center">
+              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+                Mohamed Abduljalil
+              </div>
+              <Link to="/" style={{ color: "#343434" }}>
+                View profile
+              </Link>
+            </Flex>
+          </Flex>
+          <ConfigProvider
+            theme={{
+              components: {
+                Menu: {
+                  itemSelectedBg: "#fff",
+                  itemHoverBg: "#fff",
+                  itemHoverColor: "#da005c",
+                  itemActiveBg: "#fff",
+                  padding: 0,
+                  iconSize: 24,
+                  fontSize: 20,
+                  iconMarginInlineEnd: 20,
+                },
+              },
             }}
-          />
+          >
+            <Menu
+              mode="inline"
+              inlineIndent={5}
+              style={{ border: "none" }}
+              items={items}
+              defaultSelectedKeys={[`/${user.handler}/account`]}
+              onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
+                navigate(key);
+              }}
+            />
+          </ConfigProvider>
         </Sider>
-        <Content style={{ padding: "65px 25px 0 25px", minHeight: 280 }}>
+        <Content
+          style={{
+            padding: "36px 25px 0 25px",
+            minHeight: 280,
+          }}
+        >
           <Outlet />
         </Content>
       </Layout>
