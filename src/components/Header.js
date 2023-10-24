@@ -102,6 +102,7 @@ const MainNav = () => {
             <div className="authHeaderBtns">
               <ButtonOutlined to="/login">Login</ButtonOutlined>
               <ButtonBlack to="/signup">Signup</ButtonBlack>
+              <ButtonBlack to="/:handler/account/update">Update Profile</ButtonBlack>
             </div>
           </Col>
         </Row>

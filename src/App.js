@@ -11,6 +11,9 @@ import SignupPage, { signupAction } from "./pages/signup";
 import LoginPage, { loginFormAction } from "./pages/login";
 import { checkAuthLoader } from "./app/model/auth";
 
+import UpdatePage from "./pages/updateProfile/update";
+import FormUpdate from "./pages/updateProfile/update2";
+
 const router = createBrowserRouter([
   {
     // Home & General Pages because no auth needed
@@ -31,6 +34,8 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutPage /> },
       { path: "/signup", element: <SignupPage />, action: signupAction },
       { path: "/login", element: <LoginPage />, action: loginFormAction },
+
+     
     ],
   }, // End Home & General Pages
   {
@@ -42,6 +47,7 @@ const router = createBrowserRouter([
       { index: true, element: <Account />, loader: checkAuthLoader },
       { path: "/:handler/account/sessions", element: <AllSessions /> },
       { path: "/:handler/account/session/:id", element: <SingleSession /> },
+      { path: "/:handler/account/update", element: <FormUpdate /> }
     ],
   }, // End Protected Pages
   {
