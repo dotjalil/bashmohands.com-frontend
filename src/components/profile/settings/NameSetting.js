@@ -22,9 +22,10 @@ export default function NameSetting({ initialValue }) {
   // Request to server
   function httpChangeName(name) {
     // Sending promise as a mimic to response
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log("Server Request Resolved! with value: ", name);
+        if (name === "no") reject(new Error("You can't use that name"));
         resolve(name);
       }, 3000);
     });
@@ -34,8 +35,13 @@ export default function NameSetting({ initialValue }) {
   async function onSave(newName) {
     setSettingStatus("pending");
     setNewName(newName);
-    const res = await httpChangeName(newName);
-    setName(res);
+    try {
+      const res = await httpChangeName(newName);
+      setName(res);
+    } catch (err) {
+      setNewName(name);
+      console.log(err);
+    }
     setSettingStatus("complete");
   }
 
