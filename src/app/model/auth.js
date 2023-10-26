@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { matchPath, redirect } from "react-router-dom";
 
 export function getAuthData() {
   // extract auth data from local storage
+=======
+import { redirect } from "react-router-dom";
+
+export function getAuthData() {
+>>>>>>> omar-filter_search
   const authData = {
     token: localStorage.getItem("token"),
     user: JSON.parse(localStorage.getItem("user")),
@@ -16,6 +22,7 @@ export function userAuthLoader() {
 
 export function checkAuthLoader({ request }) {
   const authData = getAuthData();
+<<<<<<< HEAD
   if (!authData.token || !authData.user) {
     return redirect(`/signup?redirect=${request.url}`);
   }
@@ -48,4 +55,11 @@ export function isAuthMineLoader({ request }) {
     // if identical, proceed to the route
     return null;
   }
+=======
+  const token = authData.token;
+  if (!token) {
+    return redirect(`/signup?redirect=${request.url}`);
+  }
+  return null;
+>>>>>>> omar-filter_search
 }
