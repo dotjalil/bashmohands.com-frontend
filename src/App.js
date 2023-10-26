@@ -19,6 +19,7 @@ import {
 } from "./app/model/auth";
 import AccountLayout from "./app/layouts/accountLayout";
 import { ConfigProvider } from "antd";
+import ProfileLayout from "./app/layouts/profileLayout";
 
 const router = createBrowserRouter([
   {
@@ -60,14 +61,28 @@ const router = createBrowserRouter([
           },
         ],
       }, // End Protected Pages
-      {
-        // Profile Page by Handler
-        path: "/:handler",
-        errorElement: <NotFound />,
-        children: [{ index: true, element: <ProfilePage /> }],
-      },
+      // {
+      //   // Profile Page by Handler
+      //   path: "/:handler",
+      //   errorElement: <NotFound />,
+      //   children: [{ index: true, element: <ProfilePage /> }],
+      // },
     ],
   }, // End Home & General Pages
+  {
+    // public profile path
+    path: "/:handler",
+    element: <ProfileLayout />,
+    errorElement: <NotFound />,
+    loader: userAuthLoader,
+    id: "profile",
+    children: [
+      {
+        index: true,
+        element: <ProfilePage />,
+      },
+    ],
+  },
 ]);
 
 function App() {
