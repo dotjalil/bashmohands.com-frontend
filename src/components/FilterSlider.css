@@ -1,0 +1,126 @@
+.ant-modal-title {
+  font-size: 18px !important;
+}
+.main-head {
+  font-size: 16px;
+  font-weight: bold;
+}
+.sort {
+  border-bottom: 1px solid #ddd;
+}
+.sort .ant-select-selection-search {
+  width: 100% !important;
+  margin: 0;
+}
+.sort .css-dev-only-do-not-override-124h07e {
+  width: 100%;
+}
+.sort .ant-space-item {
+  color: #6b7b8a !important;
+  font-size: 16px;
+  width: 100%;
+}
+/* selcted style */
+/* .topic .ant-select-selection-item,
+.country .ant-select-selection-item,
+.gender .ant-select-selection-item {
+  color: #6b7b8a !important;
+  font-size: 16px;
+} */
+.topic .ant-space-item,
+.country .ant-space-item,
+.gender .ant-space-item {
+  width: 100%;
+}
+.topic .ant-select-selector,
+.country .ant-select-selector,
+.gender .ant-select-selector {
+  padding: 0 !important;
+}
+.topic .ant-space,
+.country .ant-space,
+.gender .ant-space {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+  padding-top: 30px;
+}
+.topic .ant-space {
+  padding-top: 15px;
+}
+/* end selected style */
+.topic .ant-space-item,
+.country .ant-space-item,
+.gender .ant-space-item {
+  font-size: 16px;
+  color: #6b7b8a !important;
+}
+.topic .main-head {
+  margin-bottom: 0;
+}
+.ant-btn-primary {
+  background: none !important;
+  color: #000;
+  border: 1px solid #ddd;
+  box-shadow: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 66px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+.ant-btn-primary:hover {
+  border-color: #da005c;
+}
+.ant-btn-primary:hover span {
+  color: #000;
+}
+.main-btn {
+  background-color: #17080e;
+  color: #fff;
+  height: 58px;
+  width: 100%;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  margin: 20px auto;
+  margin-bottom: 0;
+  display: block;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+.anticon-close svg {
+  background-color: #e3e6ea;
+  padding: 5px;
+  border-radius: 50%;
+  color: #000;
+  font-size: 22px;
+}
+.filters input[type="search"] {
+  padding: 0;
+}
+.ant-select-multiple .ant-select-selection-placeholder {
+  font-size: 18px !important;
+  left: 0;
+  color: #999;
+}
+
+/* dropdown style */
+.rc-virtual-list-holder-inner > div {
+  margin-bottom: 10px !important;
+}
+
+.ant-form-item {
+  margin: 0;
+}
+.result .res:hover {
+  color: #fff !important;
+  border: none;
+}

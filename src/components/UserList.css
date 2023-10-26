@@ -1,0 +1,17 @@
+.ant-card-cover {
+  height: 284px;
+  padding: 10px;
+  border-radius: 12px;
+  /* border: 1px solid #f1f1f1; */
+}
+.ant-card-hoverable {
+  border: 1px solid #f1f1f1;
+}
+.ant-card-hoverable:hover {
+  border: 1px solid #fff1f7;
+  box-shadow: unset;
+}
+.ant-card-cover img {
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,0 +1,62 @@
+.ant-menu-horizontal {
+  border-bottom: none;
+}
+
+/** Customize the progress bar
+ * This overrides the node_modules/nprogress/nprogress.css file
+*/
+
+/* Make clicks pass-through */
+#nprogress .bar {
+  background: #da005c !important;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #da005c, 0 0 5px #da005c !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #da005c !important;
+  border-left-color: #da005c !important;
+}
+
+.authHeaderBtns {
+  display: flex;
+  gap: 20px;
+}
+
+.bars {
+  margin-left: 15px !important;
+  font-size: 25px !important;
+}
+.ant-drawer-body ul {
+  border: none !important;
+}
+@media (min-width: 992px) {
+  .ant-col ul {
+    display: flex;
+  }
+  .bars {
+    display: none;
+  }
+}
+@media (max-width: 992px) {
+  .ant-col ul {
+    display: none !important;
+  }
+  .bars {
+    display: flex;
+  }
+}
+@media (max-width: 767px) {
+  .logo {
+    width: 150px;
+  }
+  .bars {
+    font-size: 18px !important;
+  }
+  .ant-layout-header {
+    height: 65px !important;
+  }
+}
