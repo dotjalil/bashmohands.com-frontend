@@ -5,6 +5,7 @@ import {
   useNavigation,
   useLocation,
   useRouteLoaderData,
+  useMatches,
 } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -21,8 +22,21 @@ const MainNav = () => {
   const navigation = useNavigation();
   const location = useLocation();
 
+  // fallback route
+  let currentRoute = "root";
+  // check if current route is {id: profile}
+  const routeMatches = useMatches();
+  const isProfile = routeMatches.some((route) => {
+    return route.id === "profile";
+  });
+  // if public profile, fetch auth data from 'profile' route loader
+  // else, fallback to 'root'
+  if (isProfile) {
+    currentRoute = "profile";
+  }
+
   // check if login token exists
-  const authData = useRouteLoaderData("root");
+  const authData = useRouteLoaderData(currentRoute);
 
   useEffect(() => {
     NProgress.start();
