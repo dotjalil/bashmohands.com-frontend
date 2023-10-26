@@ -12,7 +12,8 @@ const Search = () => {
 
   const sendPostRequest = () => {
     console.log(searchQuery);
-    const baseUrl = `https://bashmohands.onrender.com/api/user/search?k=${searchQuery}`;
+    // const baseUrl = `https://bashmohands.onrender.com/api/user/search?k=${searchQuery}`;
+    const baseUrl = `http://localhost:5000/api/user/search?k=${searchQuery}`;
     fetch(baseUrl, {
       method: "GET",
       headers: {
@@ -40,7 +41,8 @@ const Search = () => {
 
   const handleShowInstructorsBtn = (checked) => {
     if (checked) {
-      const baseUrl = `https://bashmohands.onrender.com/api/user/instructors`;
+      // const baseUrl = `https://bashmohands.onrender.com/api/user/instructors`;
+      const baseUrl = `http://localhost:5000/api/user/instructors`;
       fetch(baseUrl, {
         method: "GET",
         headers: {
@@ -62,7 +64,8 @@ const Search = () => {
           console.error("Error:", error);
         });
     } else {
-      const baseUrl = `https://bashmohands.onrender.com/api/user`;
+      // const baseUrl = `https://bashmohands.onrender.com/api/user`;
+      const baseUrl = `http://localhost:5000/api/user`;
       fetch(baseUrl, {
         method: "GET",
         headers: {

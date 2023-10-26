@@ -12,7 +12,8 @@ export const Cards = () => {
 
   let [users, setUsers] = useState([]);
   const getUsers = () => {
-    const baseUrl = `https://bashmohands.onrender.com/api/user/`;
+    // const baseUrl = `https://bashmohands.onrender.com/api/user/`;
+    const baseUrl = `http://localhost:5000/api/user/`;
     fetch(baseUrl, {
       method: "GET",
       headers: {

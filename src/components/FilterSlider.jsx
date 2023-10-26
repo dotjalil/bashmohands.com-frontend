@@ -45,7 +45,8 @@ export const Filter = () => {
       { country: getCountry },
       { gender: getGender }
     );
-    const baseUrl = `https://bashmohands.onrender.com/api/user/filter`;
+    // const baseUrl = `https://bashmohands.onrender.com/api/user/filter`;
+    const baseUrl = `http://localhost:5000/api/user/filter`;
     fetch(baseUrl, {
       method: "POST",
       headers: {
