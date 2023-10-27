@@ -4,37 +4,11 @@ import { PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
-// const initialValues = {
-//     // Initial values for the form fields
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     country: '',
-//     phone: '',
-//     photo: '',
-//     coverImage: '',
-//     isInstructor: false,
-//     jobTitle: '',
-//     bio: '',
-//     upload: [],
-//   };
 
 const FormUpdate = ({  onSubmit }) => {
 
-    const handler = 'moji4';
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        country: '',
-        phone: '',
-        photo: '',
-        coverImage: '',
-        isInstructor: false,
-        jobTitle: '',
-        bio: '',
-        upload: [],
-      });
+    const handler = 'aliali';
+    const [formData, setFormData] = useState(null);
 
     useEffect(() => {
         // Use an async function to fetch and set the data
@@ -53,18 +27,9 @@ const FormUpdate = ({  onSubmit }) => {
     
             const dataFromServer = await response.json();
               
-              setFormData({
+              setFormData(
                 // ...formData,
-                firstName: dataFromServer.data.firstName,
-                lastName: dataFromServer.data.lastName,
-                email: dataFromServer.data.email,
-                country:dataFromServer.data.country,
-                phone: dataFromServer.data.phone,
-                upload: {
-                    fileList: [],
-                  },
-                
-              });
+                dataFromServer.data );
             console.log(dataFromServer);
             console.log(formData);
             
@@ -75,6 +40,10 @@ const FormUpdate = ({  onSubmit }) => {
     
         fetchData();
       }, []);
+
+      const [uploadedFile, setUploadedFile] = useState(null);
+
+      
 
       const handleChange = (changedFields) => {
         // Convert the array of changed fields to a dictionary for easy access
@@ -88,30 +57,40 @@ const FormUpdate = ({  onSubmit }) => {
           ...prevData,
           ...changedFieldsDict,
         }));
+
+        
       };
 
       const handleSubmit = async (values) => {
+        const photo = uploadedFile;
+        
+        console.log(photo);
+        delete values.upload;
+        
         const newValues ={
             ...values,
-            photo:values.upload[0]
+
+            // photo:photo
         }
+        
+      
         console.log(newValues);
         
         try {
           // Send the updated user data to your server for saving
-        //   await fetch(`${process.env.REACT_APP_BACKEND_API}user/${handler}/update-info`, {
-        //     method: "PATCH",
-        //     headers: {
-        //       "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(values),
+          await fetch(`${process.env.REACT_APP_BACKEND_API}user/${handler}/update-info`, {
+            method: "PATCH",
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newValues),
             
-        //   });
+          });
         
       
           // After a successful update, fetch the updated user data
-          const response = await fetch(`${process.env.REACT_APP_BACKEND_API}user/profile/${handler}`, {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_API}user/public/${handler}`, {
             method: "GET",
             headers: {
               "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -142,6 +121,48 @@ const FormUpdate = ({  onSubmit }) => {
     }
     return e && e.fileList;
   };
+  if (formData === null) {
+    return <div>Loading...</div>;
+  }
+
+
+  const uploadImage = (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    setUploadedFile(file);
+  
+    const fmData = new FormData();
+    fmData.append("photo", file);
+  
+    const config = {
+      method: "PATCH",
+      body: fmData,
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
+      onUploadProgress: (event) => {
+        const percent = (event.loaded / event.total) * 100;
+        onProgress({ percent }, file);
+      },
+    };
+  
+    fetch(`${process.env.REACT_APP_BACKEND_API}user/${handler}/update-img`, config)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("HTTP error! Status: " + response.status);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        onSuccess(file);
+        console.log(data);
+      })
+      .catch((error) => {
+        const errorObject = new Error("Some error");
+        onError({ event: errorObject });
+      });
+  };
+  
 
 
 
@@ -154,44 +175,46 @@ const FormUpdate = ({  onSubmit }) => {
         handleChange(allFields);
       }}
       onFinish={handleSubmit}
+      initialValues={formData}
     
     
     >
-      <Form.Item label="First Name" name="firstName"  initialValue={formData.firstName}>
+      <Form.Item label="First Name" name="firstName" >
       <Input  value={formData.firstName}/>
       </Form.Item>
-      <Form.Item label="Last Name" name="lastName" initialValue={formData.lastName}>
+      <Form.Item label="Last Name" name="lastName" >
       <Input  value={formData.lastName} />
       </Form.Item>
-      <Form.Item label="Email" name="email" initialValue={formData.email}>
+      <Form.Item label="Email" name="email" >
       <Input  value={formData.email} />
       </Form.Item>
-      <Form.Item label="Country" name="country" initialValue={formData.country}>
+      <Form.Item label="Country" name="country" >
       <Input  value={formData.country} />
       </Form.Item>
-      <Form.Item label="Phone" name="phone" initialValue={formData.phone}>
+      <Form.Item label="Phone" name="phone" >
       <Input  value={formData.phone} />
       </Form.Item>
-      <Form.Item label="Photo" name="photo" initialValue={formData.photo}>
+      {/* <Form.Item label="Photo" name="photo" >
       <Input  value={formData.photo}/>
-      </Form.Item>
-      <Form.Item label="Cover Image" name="coverImage" initialValue={formData.coverImage}>
+      </Form.Item> */}
+      <Form.Item label="Cover Image" name="coverImage" >
       <Input  value={formData.coverImage} />
       </Form.Item>
-      <Form.Item label="Is Instructor" name="isInstructor" valuePropName="checked" initialValue={formData.isInstructor}>
+      <Form.Item label="Is Instructor" name="isInstructor" valuePropName="checked" >
         <Switch  value={formData.isInstructor}/>
       </Form.Item>
-      <Form.Item label="Job Title" name="jobTitle" initialValue={formData.jobTitle}>
+      <Form.Item label="Job Title" name="jobTitle" >
       <Input  value={formData.jobTitle} />
       </Form.Item>
-      <Form.Item label="Bio" name="bio" initialValue={formData.bio}>
+      <Form.Item label="Bio" name="bio" >
         <TextArea rows={4}  value={formData.bio}/>
       </Form.Item>
-      <Form.Item label="Upload" name="upload" valuePropName="fileList" initialValue={[formData.upload]} getValueFromEvent={normFile}>
-        <Upload action="/upload.do" listType="picture-card" beforeUpload={()=>false}>
+      <Form.Item label="photo" name="upload" valuePropName="fileList"  getValueFromEvent={normFile}>
+        <Upload action={`${process.env.REACT_APP_BACKEND_API}user/${handler}/update-info`}
+         listType="picture-card"  maxCount={1} customRequest={uploadImage}> 
           <div>
             <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
+            <div style={{ marginTop: 8 }}>Photo</div>
           </div>
         </Upload>
       </Form.Item>
