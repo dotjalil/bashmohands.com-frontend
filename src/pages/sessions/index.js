@@ -7,85 +7,149 @@ import {
 import { Link, useRouteLoaderData } from "react-router-dom";
 import AttendeesAvatars from "../../shared/ui/loggedin/AttendeesAvatars";
 import SessionDetails from "../../components/SessionDrawer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import getAuthData from "../../shared/model/getAuthData";
 
 const { Column } = Table;
 
 export default function SessionsPage() {
   const [open, setOpen] = useState(false);
+  const [userSessions, setUsreSessions] = useState([]);
+  const [userState, setuserState] = useState("");
+
   const drawerOnOff = () => setOpen(!open);
 
-  const sessions = [
-    {
-      id: 1,
-      instructor: {
-        firstName: "Mona",
-        handler: "instructorHandler",
-        avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=1",
+  const { user } = getAuthData();
+  const { handler } = user;
+  console.log(handler);
+  const getUserSessions = () => {
+    // const baseUrl = `https://bashmohands.onrender.com/api/session/${loggedInUser.handler}`;
+    const baseUrl = `${process.env.REACT_APP_BACKEND_API}session/${handler}`;
+    fetch(baseUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-      attendees: [
-        {
-          firstName: "Mohamed",
-          handler: "attendeeHandler",
-          // avatar: "attendeeAvatar",
-        },
-      ],
-      status: "pending",
-      date: "Sat, 29 Jan 2023",
-      time: "12:00-12:30 PM",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("🚀 ~ file: index.js:30 ~ .then ~ data:", data.data);
+        setUsreSessions(data.data);
+
+        data.data[0].clientHandler === handler
+          ? setuserState("client")
+          : setuserState("instructor");
+        console.log(
+          "🚀 ~ file: index.js:49 ~ .then ~ data.data.clientHandler === loggedInUser.handler:",
+          data.data.clientHandler,
+          handler
+        );
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    getUserSessions();
+  }, []);
+
+  console.log("🚀 ~ file: index.js:54 ~ sessions ~ userSession:", userSessions);
+  const sessions = userSessions.map((userSession) => {
+    return {
+      id: userSession.id,
+      instructor: {
+        firstName: userSession.instructorHandler,
+        handler: "instructorHandler",
+        avatar: userSession.Instructor.photo,
+      },
+      client: {
+        firstName: userSession.clientHandler,
+        handler: "attendeeHandler",
+        avatar: userSession.Client.photo,
+      },
+      status: userSession.status,
+      date: userSession.date.split("T")[0],
+      time: userSession.date.split("T")[1],
       topics: ["JavaScript", "ReactJS"],
-    },
-    {
-      id: 1,
-      instructor: {
-        firstName: "Maha",
-        handler: "instructorHandler",
-        avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=2",
-      },
-      attendees: [
-        {
-          firstName: "Mohamed",
-          handler: "attendeeHandler",
-          // avatar: "attendeeAvatar",
-        },
-      ],
-      status: "confirmed",
-      date: "Sat, 29 Jan 2023",
-      time: "12:00-12:30 PM",
-      topics: ["Ajax", "jQuery"],
-    },
-    {
-      id: 1,
-      instructor: {
-        firstName: "Mansour",
-        handler: "instructorHandler",
-        avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=3",
-      },
-      attendees: [
-        {
-          firstName: "Mohamed",
-          handler: "attendeeHandler",
-          // avatar: "attendeeAvatar",
-        },
-      ],
-      status: "cancelled",
-      date: "Sat, 29 Jan 2023",
-      time: "12:00-12:30 PM",
-      topics: ["JavaScript", "ReactJS"],
-    },
-  ];
+    };
+  });
+
+  // const sessions = [
+  //   {
+  //     id: 1,
+  //     instructor: {
+  //       firstName: "Mona",
+  //       handler: "instructorHandler",
+  //       avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=1",
+  //     },
+  //     attendees: [
+  //       {
+  //         firstName: "Mohamed",
+  //         handler: "attendeeHandler",
+  //         // avatar: "attendeeAvatar",
+  //       },
+  //     ],
+  //     status: "pending",
+  //     date: "Sat, 29 Jan 2023",
+  //     time: "12:00-12:30 PM",
+  //     topics: ["JavaScript", "ReactJS"],
+  //   },
+  //   {
+  //     id: 1,
+  //     instructor: {
+  //       firstName: "Maha",
+  //       handler: "instructorHandler",
+  //       avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=2",
+  //     },
+  //     attendees: [
+  //       {
+  //         firstName: "Mohamed",
+  //         handler: "attendeeHandler",
+  //         // avatar: "attendeeAvatar",
+  //       },
+  //     ],
+  //     status: "confirmed",
+  //     date: "Sat, 29 Jan 2023",
+  //     time: "12:00-12:30 PM",
+  //     topics: ["Ajax", "jQuery"],
+  //   },
+  //   {
+  //     id: 1,
+  //     instructor: {
+  //       firstName: "Mansour",
+  //       handler: "instructorHandler",
+  //       avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=3",
+  //     },
+  //     attendees: [
+  //       {
+  //         firstName: "Mohamed",
+  //         handler: "attendeeHandler",
+  //         // avatar: "attendeeAvatar",
+  //       },
+  //     ],
+  //     status: "cancelled",
+  //     date: "Sat, 29 Jan 2023",
+  //     time: "12:00-12:30 PM",
+  //     topics: ["JavaScript", "ReactJS"],
+  //   },
+  // ];
 
   return (
     <>
       <h1>Sessions</h1>
       <p>You don't have any sessions to attend/give</p>
-      <AllSessions sessions={sessions} onDetails={drawerOnOff} />
+      <AllSessions
+        sessions={sessions && sessions}
+        onDetails={drawerOnOff}
+        userState={userState}
+      />
       <SessionDetails open={open} drawerOnOff={drawerOnOff} />
     </>
   );
 }
 
-function AllSessions({ sessions, onDetails }) {
+function AllSessions({ sessions, onDetails, userState }) {
   const { user } = useRouteLoaderData("root");
 
   const sessionsData = sessions.map((session, i) => {
@@ -93,7 +157,11 @@ function AllSessions({ sessions, onDetails }) {
       key: i,
       attendees: (
         <AttendeesAvatars
-          attendees={[session.attendees[0], session.instructor]}
+          attendees={
+            userState == "client"
+              ? [session.client, session.instructor]
+              : [session.instructor, session.client]
+          }
         />
       ),
 
@@ -151,7 +219,7 @@ function SessionStatus({ status }) {
       ),
     },
     {
-      status: "confirmed",
+      status: "deliverd",
       element: (
         <Tag icon={<CheckCircleOutlined />} color="success">
           confirmed
