@@ -1,4 +1,9 @@
-import { Outlet, useNavigate, useRouteLoaderData } from "react-router";
+import {
+  Outlet,
+  useNavigate,
+  useRouteLoaderData,
+  useLocation,
+} from "react-router";
 import {
   Breadcrumb,
   Col,
@@ -23,8 +28,9 @@ const { Header, Content, Footer, Sider } = Layout;
 
 export default function AccountLayout() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { user } = useRouteLoaderData("root");
-
+  console.log("acc nav", pathname);
   const items = [
     {
       label: "Home",
@@ -105,7 +111,7 @@ export default function AccountLayout() {
               inlineIndent={5}
               style={{ border: "none" }}
               items={items}
-              defaultSelectedKeys={[`/${user.handler}/account`]}
+              defaultSelectedKeys={[`${pathname}`]}
               onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
                 navigate(key);
               }}
