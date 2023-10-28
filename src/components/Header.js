@@ -6,6 +6,7 @@ import {
   useLocation,
   useRouteLoaderData,
   useMatches,
+  useNavigate,
 } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -21,6 +22,7 @@ const MainNav = () => {
   // Routing progress bar setup
   const navigation = useNavigation();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // fallback route
   let currentRoute = "root";
@@ -94,8 +96,21 @@ const MainNav = () => {
                 display: "flex",
                 justifyContent: "center",
               }}
+              items={[
+                {
+                  key: "/",
+                  label: "Home",
+                },
+                {
+                  key: "/1",
+                  label: "User",
+                },
+              ]}
+              onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
+                navigate(key);
+              }}
             >
-              <Menu.Item key="1">
+              {/* <Menu.Item key="1">
                 <Link to="/" style={{ fontSize: "16px" }}>
                   Home
                 </Link>
@@ -109,7 +124,7 @@ const MainNav = () => {
                 <Link to="/1/account" style={{ fontSize: "16px" }}>
                   User Account
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </Col>
           <Col

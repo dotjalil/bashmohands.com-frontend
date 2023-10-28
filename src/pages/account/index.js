@@ -135,6 +135,7 @@ function BookmarkedConnections() {
       key: i,
       userInfo: (
         <UserAvatar
+          key={user.handler}
           firstName={user.firstName}
           lastName={user.lastName}
           avatar={user.avatar}
@@ -145,9 +146,7 @@ function BookmarkedConnections() {
       topics: user.topics,
       action: (
         <Link to={user.handler}>
-          <Button type="link" primary>
-            View profile
-          </Button>
+          <Button type="link">View profile</Button>
         </Link>
       ),
     };

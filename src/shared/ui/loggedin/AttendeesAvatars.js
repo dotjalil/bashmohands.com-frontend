@@ -15,12 +15,12 @@ export default function AttendeesAvatars({ attendees }) {
         {attendees.length > 0 &&
           attendees.map((attendee) => {
             return (
-              <>
+              <div key={attendee.handler}>
                 {attendee.avatar && <Avatar src={attendee.avatar} />}
                 {!attendee.avatar && (
                   <Avatar style={{ backgroundColor: "#f56a00" }}>M</Avatar>
                 )}
-              </>
+              </div>
             );
           })}
       </Avatar.Group>
