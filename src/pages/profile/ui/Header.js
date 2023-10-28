@@ -12,6 +12,7 @@ export default function ProfileHeader({
   jobTitle,
   company,
   isMine,
+  handler,
 }) {
   return (
     <div className="photo-name">
@@ -25,7 +26,17 @@ export default function ProfileHeader({
           <p>{jobTitle + " at " + company}</p>
         </div>
 
-        {!isMine && <BookModal />}
+        {!isMine && (
+          <BookModal
+            firstName={firstName}
+            lastName={lastName}
+            flag="🇪🇬"
+            title={jobTitle}
+            company={company}
+            topics={topics}
+            handler={handler}
+          />
+        )}
       </div>
     </div>
   );

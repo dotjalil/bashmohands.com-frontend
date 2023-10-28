@@ -1,5 +1,6 @@
 import "./BookSession.css";
 import { useState } from "react";
+import getAuthData from "../../../shared/model/getAuthData";
 import {
   Button,
   Col,
@@ -108,7 +109,6 @@ function StepOne({ date, setDate, time, setTime }) {
 
 function StepTwo({ schedule, setNotes, notes }) {
   const { date, time } = schedule;
-  console.log(date, date.$d.getDay());
   return (
     <>
       <h1 style={{ fontSize: "22px", marginTop: "36px" }}>
@@ -138,14 +138,52 @@ function StepTwo({ schedule, setNotes, notes }) {
           onChange={setNotes}
           rows={4}
           placeholder="Feel free to write whatever comes to your mind, you can also ask your instructor any questions you have in mind."
-          maxLength={6}
         />{" "}
       </Flex>
     </>
   );
 }
 
-export default function BookModal() {
+function ThankYou({ instructorFName, onClose }) {
+  // Thank you content goes here
+  return (
+    <Flex vertical={true} gap={42} style={{ textAlign: "center" }}>
+      <img
+        src="/booking-sent.svg"
+        alt="success"
+        style={{ maxWidth: "280px", height: "auto", margin: "0 auto" }}
+      />
+      <p style={{ fontSize: "18px" }}>
+        We lat <span style={{ color: "#DA005C" }}>{instructorFName}</span> know,
+        and we're waiting for their approval!
+      </p>
+      <Button
+        type="primary"
+        style={{
+          height: "50px",
+          borderRadius: "6px",
+          width: "146px",
+          margin: "0 auto",
+        }}
+        onClick={() => {
+          onClose();
+        }}
+      >
+        Close
+      </Button>
+    </Flex>
+  );
+}
+
+export default function BookModal({
+  firstName,
+  lastName,
+  flag,
+  title,
+  company,
+  topics,
+  handler,
+}) {
   const [bookingState, setBookingState] = useState({
     model: {
       date: null,
@@ -226,11 +264,6 @@ export default function BookModal() {
       ),
     },
   ];
-
-  function ThankYou() {
-    // Thank you content goes here
-    return <h1>Thank You</h1>;
-  }
 
   const handleStartBooking = () => {
     setBookingState((prevBookingState) => {
@@ -324,18 +357,33 @@ export default function BookModal() {
     });
   };
 
+  const { user } = getAuthData();
   async function onSubmit() {
     // message.success("Processing complete!");
     setSubmitting(true);
-    console.log("Submitted", bookingState.model);
     // send request here
+    const modifiedDate = bookingState.model.date.$d;
+    const hours = bookingState.model.time.slice(0, 2);
+    const minutes = bookingState.model.time.slice(-2);
+    modifiedDate.setHours(hours);
+    modifiedDate.setMinutes(minutes);
+    modifiedDate.setSeconds(0);
+    console.log("date", modifiedDate.toISOString());
     const res = await sendBookingRequest({
-      instructor: "1",
-      client: "0",
-      date: bookingState.model.schedule,
+      instructorHandler: handler,
+      clientHandler: user.handler,
+      date: modifiedDate.toISOString(),
       notes: bookingState.model.notes,
     });
-    setFinished(true);
+    console.log("request data", res);
+    if (res.ok) {
+      const response = await res.json();
+      const data = response.data;
+      // console.log(response, data);
+      setFinished(true);
+    } else {
+      console.log("Something went worng!");
+    }
   }
 
   return (
@@ -374,6 +422,7 @@ export default function BookModal() {
                 style={{
                   borderBottom: "1px solid #F1F1F1",
                   marginRight: "30px",
+                  paddingBottom: "18px",
                 }}
               >
                 <Avatar
@@ -384,16 +433,40 @@ export default function BookModal() {
                 />
                 <Flex vertical={true} justify="center">
                   <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    {"firstName" + " " + "lastName"}
+                    {firstName + " " + lastName + " " + flag}
                   </div>
                   <p style={{ fontSize: "14px", color: "#17080E", margin: 0 }}>
-                    {"title" + " at " + "company"}
+                    {title + " at " + company}
                   </p>
+                </Flex>
+              </Flex>
+              <Flex vertical={true} style={{ marginTop: "18px" }}>
+                <span style={{ fontSize: "14px" }}>Session Duration</span>
+                <span
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginTop: "8px",
+                  }}
+                >
+                  30 Minutes
+                </span>
+              </Flex>
+              <Flex vertical={true} style={{ marginTop: "18px" }}>
+                <span style={{ fontSize: "14px" }}>Topics</span>
+                <Flex
+                  style={{
+                    marginTop: "8px",
+                  }}
+                >
+                  <span>Career Mentoring</span>
                 </Flex>
               </Flex>
             </Col>
             <Col span={15} style={{ paddingLeft: "40px", paddingTop: "20px" }}>
-              {bookingState.ui.finished && <ThankYou />}
+              {bookingState.ui.finished && (
+                <ThankYou onClose={handleCancelBooking} />
+              )}
               {!bookingState.ui.finished && (
                 <BookingSteps
                   steps={steps}

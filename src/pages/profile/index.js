@@ -13,16 +13,16 @@ import ProfileHeader from "./ui/Header";
 import About from "./ui/About";
 import getAuthData from "../../shared/model/getAuthData";
 import ProfileSkeleton from "./ui/Skeleton";
+import ErrorElement from "../../components/Error";
 const { Content } = Layout;
 
 const ProfilePage = () => {
   const { data } = useLoaderData();
   // const { firstName, lastName, photo, bio, country, topics, isMine } = data;
-
   return (
     <>
       <Suspense fallback={<ProfileSkeleton />}>
-        <Await resolve={data}>
+        <Await resolve={data} errorElement={<ErrorElement />}>
           {(profileData) => (
             <div>
               <CoverPhoto />
@@ -33,6 +33,7 @@ const ProfilePage = () => {
                   photo={profileData.photo}
                   jobTitle={"Software Developer"}
                   company={"Vodafone"}
+                  handler={profileData.handler}
                   isMine={profileData.isMine}
                 />
                 <About bio={profileData.bio} />
@@ -70,7 +71,7 @@ async function asyncProfilePageLoader(request, params) {
   } else {
     const resJson = await response.json();
     //   // Send the isMine along with user data
-    const data = { ...resJson.data, isMine };
+    const data = { ...resJson.data, isMine, handler };
     // send data to the component and render
     // return {
     //   firstName: "Mohamed",
