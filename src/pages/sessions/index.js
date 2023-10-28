@@ -8,6 +8,7 @@ import { Link, useRouteLoaderData } from "react-router-dom";
 import AttendeesAvatars from "../../shared/ui/loggedin/AttendeesAvatars";
 import SessionDetails from "../../components/SessionDrawer";
 import { useEffect, useState } from "react";
+import getAuthData from "../../shared/model/getAuthData";
 
 const { Column } = Table;
 
@@ -18,22 +19,12 @@ export default function SessionsPage() {
 
   const drawerOnOff = () => setOpen(!open);
 
-  const getAuthData = () => {
-    return {
-      token: "",
-      user: {
-        firstName: "Omar",
-        lastName: "Abdo",
-        handler: "yousraaa",
-      },
-    };
-  };
-
-  const loggedInUser = getAuthData().user;
-
+  const { user } = getAuthData();
+  const { handler } = user;
+  console.log(handler);
   const getUserSessions = () => {
     // const baseUrl = `https://bashmohands.onrender.com/api/session/${loggedInUser.handler}`;
-    const baseUrl = `http://localhost:5000/api/session/${loggedInUser.handler}`;
+    const baseUrl = `${process.env.REACT_APP_BACKEND_API}session/${handler}`;
     fetch(baseUrl, {
       method: "GET",
       headers: {
@@ -45,13 +36,13 @@ export default function SessionsPage() {
         console.log("🚀 ~ file: index.js:30 ~ .then ~ data:", data.data);
         setUsreSessions(data.data);
 
-        data.data[0].clientHandler === loggedInUser.handler
+        data.data[0].clientHandler === handler
           ? setuserState("client")
           : setuserState("instructor");
         console.log(
           "🚀 ~ file: index.js:49 ~ .then ~ data.data.clientHandler === loggedInUser.handler:",
           data.data.clientHandler,
-          loggedInUser.handler
+          handler
         );
       })
       .catch((error) => {
