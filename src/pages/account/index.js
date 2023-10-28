@@ -106,12 +106,12 @@ function UpcomingSessions({ drawerOnOff }) {
 function BookmarkedConnections() {
   const users = [
     {
-      firstName: "John",
-      lastName: "Brown",
-      title: "Product Manager",
+      firstName: "Hassan",
+      lastName: "Kamel",
+      title: "Front-End Engineer",
       company: "Vodafone",
       topics: ["JavaScript", "NodeJS"],
-      handler: "/moji4",
+      handler: "/hassan",
     },
     {
       firstName: "Jim",
