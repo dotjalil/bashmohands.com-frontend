@@ -21,6 +21,9 @@ import AccountLayout from "./app/layouts/accountLayout";
 import { ConfigProvider } from "antd";
 import ProfileLayout from "./app/layouts/profileLayout";
 
+import UpdatePage from "./pages/updateProfile/update";
+import FormUpdate from "./pages/updateProfile/update2";
+
 const router = createBrowserRouter([
   {
     // Home & General Pages because no auth needed
@@ -59,6 +62,7 @@ const router = createBrowserRouter([
             path: "/:handler/account/profile",
             element: <ProfileSettingsPage />,
           },
+          { path: "/:handler/account/update", element: <FormUpdate /> },
         ],
       }, // End Protected Pages
       // {
