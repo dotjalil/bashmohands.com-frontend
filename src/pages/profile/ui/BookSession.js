@@ -539,7 +539,10 @@ export default function BookModal({
             </Col>
             <Col span={15} style={{ paddingLeft: "40px", paddingTop: "20px" }}>
               {bookingState.ui.finished && (
-                <ThankYou onClose={handleCancelBooking} />
+                <ThankYou
+                  onClose={handleCancelBooking}
+                  instructorFName={firstName}
+                />
               )}
               {!bookingState.ui.finished && (
                 <BookingSteps
