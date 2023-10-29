@@ -1,18 +1,44 @@
 import "./Header.css";
 // import { useState } from "react";
-import { Link, useNavigation, useLocation } from "react-router-dom";
+import {
+  Link,
+  useNavigation,
+  useLocation,
+  useRouteLoaderData,
+  useMatches,
+  useNavigate,
+} from "react-router-dom";
 import { useEffect } from "react";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 import { Layout, Menu, ConfigProvider, Row, Col, Button } from "antd";
+import { ButtonOutlined, UserHeaderBtn } from "../shared/ui";
+import { ButtonBlack } from "../shared/ui/ButtonBlack";
 const { Header } = Layout;
 
 const MainNav = () => {
   // Routing progress bar setup
   const navigation = useNavigation();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // fallback route
+  let currentRoute = "root";
+  // check if current route is {id: profile}
+  const routeMatches = useMatches();
+  const isProfile = routeMatches.some((route) => {
+    return route.id === "profile";
+  });
+  // if public profile, fetch auth data from 'profile' route loader
+  // else, fallback to 'root'
+  if (isProfile) {
+    currentRoute = "profile";
+  }
+
+  // check if login token exists
+  const authData = useRouteLoaderData(currentRoute);
 
   useEffect(() => {
     NProgress.start();
@@ -70,8 +96,21 @@ const MainNav = () => {
                 display: "flex",
                 justifyContent: "center",
               }}
+              items={[
+                {
+                  key: "/",
+                  label: "Home",
+                },
+                {
+                  key: "/1",
+                  label: "User",
+                },
+              ]}
+              onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
+                navigate(key);
+              }}
             >
-              <Menu.Item key="1">
+              {/* <Menu.Item key="1">
                 <Link to="/" style={{ fontSize: "16px" }}>
                   Home
                 </Link>
@@ -85,7 +124,7 @@ const MainNav = () => {
                 <Link to="/1/account" style={{ fontSize: "16px" }}>
                   User Account
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </Col>
           <Col
@@ -96,29 +135,20 @@ const MainNav = () => {
               alignItems: "center",
             }}
           >
-            <Button
-              type="default"
-              shape="round"
-              size={"small"}
-              style={{
-                display: "flex",
-                paddingLeft: "15px",
-                gap: "5px",
-                height: "46px",
-                alignItems: "center",
-                padding: "5px",
-                paddingRight: "15px",
-              }}
-            >
-              <img
-                alt="avatar"
-                src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-                width={35}
-                height={35}
-                style={{ borderRadius: "35px" }}
+            {authData && authData.token && authData.user && (
+              <UserHeaderBtn
+                firstName={authData.user.firstName}
+                lastName={authData.user.lastName}
+                photo={authData.user.photo}
+                handler={authData.user.handler}
               />
-              Mohamed Abduljalil
-            </Button>
+            )}
+            {(!authData || !authData.token || !authData.user) && (
+              <div className="authHeaderBtns">
+                <ButtonOutlined to="/login">Login</ButtonOutlined>
+                <ButtonBlack to="/signup">Signup</ButtonBlack>
+              </div>
+            )}
           </Col>
         </Row>
       </Header>
