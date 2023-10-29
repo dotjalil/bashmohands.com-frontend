@@ -5,14 +5,6 @@ export default function sendBookingRequest({
   notes,
 }) {
   // Request to server
-  const res = {
-    instructorHandler,
-    clientHandler,
-    date,
-    notes,
-    // topics
-  };
-  // Sending promise as a mimic to response
   return fetch(`${process.env.REACT_APP_BACKEND_API}session/book`, {
     method: "POST",
     headers: {

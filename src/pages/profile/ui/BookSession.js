@@ -23,6 +23,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import sendBookingRequest from "../../../shared/model/sendBookingRequest";
+import { Link, useParams } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -145,9 +146,12 @@ function StepTwo({ schedule, setNotes, notes }) {
 }
 
 function ThankYou({ instructorFName, onClose }) {
+  const { user } = getAuthData();
+  const { handler } = user;
+
   // Thank you content goes here
   return (
-    <Flex vertical={true} gap={42} style={{ textAlign: "center" }}>
+    <Flex vertical={true} gap={12} style={{ textAlign: "center" }}>
       <img
         src="/booking-sent.svg"
         alt="success"
@@ -157,20 +161,33 @@ function ThankYou({ instructorFName, onClose }) {
         We lat <span style={{ color: "#DA005C" }}>{instructorFName}</span> know,
         and we're waiting for their approval!
       </p>
-      <Button
-        type="primary"
-        style={{
-          height: "50px",
-          borderRadius: "6px",
-          width: "146px",
-          margin: "0 auto",
-        }}
-        onClick={() => {
-          onClose();
-        }}
-      >
-        Close
-      </Button>
+      <Flex gap={10} justify="center">
+        <Button
+          // type="primary"
+          style={{
+            height: "50px",
+            borderRadius: "6px",
+            width: "146px",
+          }}
+          onClick={() => {
+            onClose();
+          }}
+        >
+          Close
+        </Button>
+        <Link to={`/${handler}/account/sessions`}>
+          <Button
+            type="primary"
+            style={{
+              height: "50px",
+              borderRadius: "6px",
+              width: "146px",
+            }}
+          >
+            Manage Sessions
+          </Button>
+        </Link>
+      </Flex>
     </Flex>
   );
 }
@@ -198,6 +215,35 @@ export default function BookModal({
       submitting: false,
     },
   });
+
+  // Show user loading messages
+  const [messageApi, messageContext] = message.useMessage();
+  const loadingMessage = () => {
+    messageApi.open({
+      key: "bookingMessage",
+      type: "loading",
+      content: "Sending request!",
+      duration: 10,
+    });
+  };
+  const errorMessage = () => {
+    messageApi.destroy();
+    message.open({
+      key: "bookingMessage",
+      type: "error",
+      content: "Oops! Try Again!",
+      duration: 1,
+    });
+  };
+  const successMessage = () => {
+    messageApi.destroy();
+    message.open({
+      key: "bookingMessage",
+      type: "success",
+      content: "Success!",
+      duration: 1,
+    });
+  };
 
   // Model methods
   const setDate = (dateString) => {
@@ -358,41 +404,69 @@ export default function BookModal({
   };
 
   const { user } = getAuthData();
+
   async function onSubmit() {
-    // message.success("Processing complete!");
+    // Change some UI upon submit
     setSubmitting(true);
-    // send request here
+    loadingMessage();
+
+    // Clean up the date string sent to backend
     const modifiedDate = bookingState.model.date.$d;
     const hours = bookingState.model.time.slice(0, 2);
     const minutes = bookingState.model.time.slice(-2);
     modifiedDate.setHours(hours);
     modifiedDate.setMinutes(minutes);
     modifiedDate.setSeconds(0);
-    console.log("date", modifiedDate.toISOString());
+
+    // POST Server
     const res = await sendBookingRequest({
       instructorHandler: handler,
       clientHandler: user.handler,
       date: modifiedDate.toISOString(),
       notes: bookingState.model.notes,
     });
-    console.log("request data", res);
+
     if (res.ok) {
+      // Change some UI
+      successMessage();
+      // Clean up response data
       const response = await res.json();
       const data = response.data;
       // console.log(response, data);
       setFinished(true);
     } else {
-      console.log("Something went worng!");
+      // Change some UI
+      errorMessage();
+      setSubmitting(false);
+      const response = await res.json();
+      console.log("Something went worng!", response);
     }
   }
 
   return (
     <>
+      {messageContext}
       <div className="btns">
-        <button className="call-btn" onClick={handleStartBooking}>
-          <img src="imgs/7.svg" alt="" />
-          Schedule FREE Call
-        </button>
+        {!bookingState.ui.finished && (
+          <button className="call-btn" onClick={handleStartBooking}>
+            <img src="imgs/7.svg" alt="" />
+            Schedule FREE Call
+          </button>
+        )}
+        {bookingState.ui.finished && (
+          <Link to={`/${user.handler}/account/sessions`}>
+            <Button
+              type="primary"
+              style={{
+                height: "50px",
+                paddingLeft: "22px",
+                paddingRight: "22px",
+              }}
+            >
+              Manage Sessions
+            </Button>
+          </Link>
+        )}
         <button className="cv">
           <img src="imgs/8.svg" className="cv-img" alt="" />
         </button>
