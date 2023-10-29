@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import ResponseDataContext from "./respondDataContext";
+import ResponseDataContext from "./responseDataContext";
 
 const SearchDataContext = ({ children }) => {
   const [searchData, setsearchData] = useState("");

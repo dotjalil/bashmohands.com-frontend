@@ -1,92 +1,113 @@
-import React, { useEffect, useState } from "react";
-import { LockOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Row, Col } from "antd";
+import React, { createContext, useContext, useState } from "react";
 import "./Search.css";
+import { Switch } from "antd";
+import { Filter } from "./FilterSlider";
+import SearchDataContext from "../shared/contexts/searchDataContext";
+import ResponseDataContext from "../shared/contexts/responseDataContext";
 
 const Search = () => {
-  const [form] = Form.useForm();
-  const [clientReady, setClientReady] = useState(false);
+  const [searchQuery, setsearchQuery] = useState("");
+  // const [responseData, setResponseData] = useState(null);
+  const { searchData, setsearchData } = useContext(ResponseDataContext);
 
-  // To disable submit button at the beginning.
-  useEffect(() => {
-    setClientReady(true);
-  }, []);
-  const onFinish = (values) => {
-    console.log("Finish:", values);
+  const sendPostRequest = () => {
+    console.log(searchQuery);
+    const baseUrl = `https://bashmohands.onrender.com/api/user/search?k=${searchQuery}`;
+    // const baseUrl = `http://localhost:5000/api/user/search?k=${searchQuery}`;
+    fetch(baseUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify({ query }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data as needed
+        console.log(data);
+        setsearchData(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const handleInputChange = (event) => {
+    setsearchQuery(event.target.value);
+  };
+  const handleKeyPress = (event) => {
+    sendPostRequest();
+  };
+
+  const handleShowInstructorsBtn = (checked) => {
+    if (checked) {
+      const baseUrl = `https://bashmohands.onrender.com/api/user/instructors`;
+      // const baseUrl = `http://localhost:5000/api/user/instructors`;
+      fetch(baseUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("🚀 ~ file: FilterSlider.jsx:56 ~ .then ~ data:", data);
+          // Handle the response data as needed
+          // setsearchData(data);
+          console.log(
+            "🚀 ~ file: FilterSlider.jsx:59 ~ .then ~ data.data:",
+            data.data
+          );
+          setsearchData({ data: data.data });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      const baseUrl = `https://bashmohands.onrender.com/api/user`;
+      // const baseUrl = `http://localhost:5000/api/user`;
+      fetch(baseUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("🚀 ~ file: FilterSlider.jsx:56 ~ .then ~ data:", data);
+          // Handle the response data as needed
+          // setsearchData(data);
+          console.log(
+            "🚀 ~ file: FilterSlider.jsx:59 ~ .then ~ data.data:",
+            data.data
+          );
+          setsearchData({ data: data.data });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
   return (
-    <Form
-      form={form}
-      name="horizontal_login"
-      layout="inline"
-      onFinish={onFinish}
-    >
-      <Row style={{ width: "100%" }}>
-        <Col span={12}>
-          <Form.Item
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input
-              className="searchbox"
-              prefix={<SearchOutlined className="site-form-item-icon" />}
-              placeholder="Search by company, role, name..."
-              style={{
-                height: "66px",
-                borderRadius: "12px",
-                fontSize: "16px",
-                padding: "17px 22px",
-              }}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Row>
-            <Col span={18}>
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
-              >
-                <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Password"
-                />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item shouldUpdate>
-                {() => (
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    disabled={
-                      !clientReady ||
-                      !form.isFieldsTouched(true) ||
-                      !!form
-                        .getFieldsError()
-                        .filter(({ errors }) => errors.length).length
-                    }
-                  >
-                    Log in
-                  </Button>
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Form>
+    <div className="up-div">
+      <div className="input">
+        <input
+          type="search"
+          placeholder="Search by company, role, name..."
+          onChange={handleInputChange}
+          onKeyUp={handleKeyPress}
+        />
+        <img src="imgs/2.svg" alt="icon" className="search-icon" />
+      </div>
+      <div className="available">
+        <h5>Show only available instructors</h5>
+        <Switch onChange={handleShowInstructorsBtn} />
+      </div>
+      <div className="filter">
+        <Filter />
+      </div>
+    </div>
   );
 };
+
 export default Search;

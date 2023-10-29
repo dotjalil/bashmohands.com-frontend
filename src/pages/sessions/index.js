@@ -41,7 +41,6 @@ export default function SessionsPage() {
           : setuserState("instructor");
         console.log(
           "🚀 ~ file: index.js:49 ~ .then ~ data.data.clientHandler === loggedInUser.handler:",
-          data.data.clientHandler,
           handler
         );
       })
@@ -55,25 +54,27 @@ export default function SessionsPage() {
   }, []);
 
   console.log("🚀 ~ file: index.js:54 ~ sessions ~ userSession:", userSessions);
-  const sessions = userSessions.map((userSession) => {
-    return {
-      id: userSession.id,
-      instructor: {
-        firstName: userSession.instructorHandler,
-        handler: "instructorHandler",
-        avatar: userSession.Instructor.photo,
-      },
-      client: {
-        firstName: userSession.clientHandler,
-        handler: "attendeeHandler",
-        avatar: userSession.Client.photo,
-      },
-      status: userSession.status,
-      date: userSession.date.split("T")[0],
-      time: userSession.date.split("T")[1],
-      topics: ["JavaScript", "ReactJS"],
-    };
-  });
+  const sessions =
+    userSessions &&
+    userSessions.map((userSession) => {
+      return {
+        id: userSession.id,
+        instructor: {
+          firstName: userSession.instructorHandler,
+          handler: "instructorHandler",
+          avatar: userSession.Instructor.photo,
+        },
+        client: {
+          firstName: userSession.clientHandler,
+          handler: "attendeeHandler",
+          avatar: userSession.Client.photo,
+        },
+        status: userSession.status,
+        date: userSession.date.split("T")[0],
+        time: userSession.date.split("T")[1],
+        topics: ["JavaScript", "ReactJS"],
+      };
+    });
 
   // const sessions = [
   //   {

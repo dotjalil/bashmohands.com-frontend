@@ -1,0 +1,47 @@
+footer {
+  padding-bottom: 10px !important;
+  margin-top: 50px;
+  padding-top: 70px !important;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 56px;
+}
+div.links {
+  display: flex;
+  gap: 55px;
+}
+div.links li {
+  padding-bottom: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+div.links li:hover {
+  color: #da005c;
+}
+p.text {
+  width: 518px;
+}
+.copyRight {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0;
+}
+@media (max-width: 767px) {
+  .footer {
+    display: block;
+  }
+  div.links {
+    padding-top: 20px;
+  }
+  p.text {
+    width: 100%;
+  }
+}
