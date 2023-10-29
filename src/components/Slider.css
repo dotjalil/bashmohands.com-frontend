@@ -1,0 +1,33 @@
+.slider-up {
+  padding-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.slider-up > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.slider-up > div p {
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.slider-up > div p:hover {
+  color: #da005c;
+}
+@media (max-width: 992px) {
+  .slider-up > div:not(:last-of-type) {
+    padding-right: 15px;
+  }
+}
+@media (max-width: 767px) {
+  .slider-up > div:not(:last-of-type) {
+    padding-right: 30px;
+  }
+}

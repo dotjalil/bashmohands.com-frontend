@@ -1,12 +1,15 @@
+import "./index.css";
 // import {  message } from "antd";
 import Search from "../../components/Search";
-import { useLoaderData } from "react-router-dom";
+// import { useLoaderData } from "react-router-dom";
 import supabase from "../../shared/model/supabaseClient";
-import UserList from "../../components/UserList";
+// import UserList from "../../components/UserList";
+import { Slider } from "../../components/Slider";
+import { Cards } from "../../components/Cards";
 
 export default function HomePage() {
   // const [messageApi, contextHolder] = message.useMessage();
-  const users = useLoaderData();
+  // const users = useLoaderData();
 
   // function showNotification() {
   //   messageApi.open({
@@ -21,11 +24,16 @@ export default function HomePage() {
 
   return (
     <div style={{ paddingTop: "65px" }}>
-      <h1 style={{ fontSize: "34px", marginBottom: "32px" }}>
+      <h1
+        style={{ fontSize: "34px", marginBottom: "32px" }}
+        className="heading"
+      >
         Search instructors
       </h1>
       <Search />
-      <UserList users={users} />
+      <Slider />
+      <Cards />
+      <button className="card-btn">Load more instructors</button>
     </div>
   );
 }
