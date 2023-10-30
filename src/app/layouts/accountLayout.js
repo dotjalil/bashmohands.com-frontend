@@ -44,7 +44,7 @@ export default function AccountLayout() {
     },
     {
       label: "My Profile",
-      key: `/${user.handler}/account/profile`,
+      key: `/${user.handler}/account/update`,
       icon: <UserOutlined />,
     },
     {

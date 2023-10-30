@@ -106,6 +106,8 @@ const FormUpdate = ({ onSubmit }) => {
       const updatedData = await response.json();
       console.log(updatedData);
 
+      message.success('Profile info updated successfully')
+
       console.log("User data updated successfully");
     } catch (error) {
       console.error("Error updating user data: ", error);
@@ -175,15 +177,17 @@ const FormUpdate = ({ onSubmit }) => {
       onFinish={handleSubmit}
       initialValues={formData}
     >
-      <Form.Item label="First Name" name="firstName">
+      <Form.Item label="First Name" name="firstName" 
+       rules={[{ required: true, message: 'Please input your firstName!' }]}>
         <Input value={formData.firstName} />
       </Form.Item>
-      <Form.Item label="Last Name" name="lastName">
+      <Form.Item label="Last Name" name="lastName"
+       rules={[{ required: true, message: 'Please input your lastName!' }]}>
         <Input value={formData.lastName} />
       </Form.Item>
-      <Form.Item label="Email" name="email">
+      {/* <Form.Item label="Email" name="email">
         <Input value={formData.email} />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item label="Country" name="country">
         <Input value={formData.country} />
       </Form.Item>
@@ -193,9 +197,9 @@ const FormUpdate = ({ onSubmit }) => {
       {/* <Form.Item label="Photo" name="photo" >
       <Input  value={formData.photo}/>
       </Form.Item> */}
-      <Form.Item label="Cover Image" name="coverImage">
+      {/* <Form.Item label="Cover Image" name="coverImage">
         <Input value={formData.coverImage} />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         label="Is Instructor"
         name="isInstructor"
@@ -220,6 +224,7 @@ const FormUpdate = ({ onSubmit }) => {
           listType="picture-card"
           maxCount={1}
           customRequest={uploadImage}
+         
         >
           <div>
             <PlusOutlined />
@@ -228,7 +233,7 @@ const FormUpdate = ({ onSubmit }) => {
         </Upload>
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
-        <Button type="primary" htmlType="submit">
+        <Button block danger htmlType="submit">
           Update Profile
         </Button>
       </Form.Item>
