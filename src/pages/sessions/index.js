@@ -153,30 +153,32 @@ export default function SessionsPage() {
 function AllSessions({ sessions, onDetails, userState }) {
   const { user } = useRouteLoaderData("root");
 
-  const sessionsData = sessions.map((session, i) => {
-    return {
-      key: i,
-      attendees: (
-        <AttendeesAvatars
-          attendees={
-            userState == "client"
-              ? [session.client, session.instructor]
-              : [session.instructor, session.client]
-          }
-        />
-      ),
+  const sessionsData =
+    sessions &&
+    sessions.map((session, i) => {
+      return {
+        key: i,
+        attendees: (
+          <AttendeesAvatars
+            attendees={
+              userState == "client"
+                ? [session.client, session.instructor]
+                : [session.instructor, session.client]
+            }
+          />
+        ),
 
-      topics: session.topics,
-      date: session.date,
-      time: session.time,
-      status: <SessionStatus status={session.status} />,
-      action: (
-        // <Link to={`/${user.handler}/session/${session.id}`}>
-        <Button onClick={onDetails}>Details</Button>
-        // </Link>
-      ),
-    };
-  });
+        topics: session.topics,
+        date: session.date,
+        time: session.time,
+        status: <SessionStatus status={session.status} />,
+        action: (
+          // <Link to={`/${user.handler}/session/${session.id}`}>
+          <Button onClick={onDetails}>Details</Button>
+          // </Link>
+        ),
+      };
+    });
   return (
     <section style={{ paddingTop: "35px" }}>
       <Table dataSource={sessionsData} pagination={false}>

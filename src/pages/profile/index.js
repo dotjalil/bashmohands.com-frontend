@@ -18,6 +18,7 @@ const { Content } = Layout;
 
 const ProfilePage = () => {
   const { data } = useLoaderData();
+
   // const { firstName, lastName, photo, bio, country, topics, isMine } = data;
   return (
     <>
@@ -29,8 +30,8 @@ const ProfilePage = () => {
               <Content style={{ paddingLeft: "50px", paddingRight: "50px" }}>
                 <ProfileHeader
                   firstName={profileData.firstName}
-                  lastName={profileData.lastName}
                   photo={profileData.photo}
+                  lastName={profileData.lastName}
                   jobTitle={"Software Developer"}
                   company={"Vodafone"}
                   handler={profileData.handler}

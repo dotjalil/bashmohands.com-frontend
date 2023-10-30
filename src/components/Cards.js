@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Cards.css";
 import { Card } from "antd";
 import ResponseDataContext from "../shared/contexts/responseDataContext";
+import { Link } from "react-router-dom";
 const { Meta } = Card;
 
 export const Cards = () => {
@@ -44,39 +45,41 @@ export const Cards = () => {
       {users &&
         users.map((user, index) => {
           return (
-            <Card
-              hoverable
-              cover={
-                <img
-                  alt="example"
-                  src={user.photo}
-                  style={{
-                    objectFit: "cover",
-                    borderRadius: "20px",
-                  }}
-                />
-              }
-              key={index}
-            >
-              <Meta title={`${user.firstName} ${user.lastName}`} />
-              <p className="jopTitle">{user.jobTitle}</p>
-              <div className="child">
-                <div className="exp">
-                  <p className="head">Experience</p>
-                  <p style={{ fontWeight: "400" }}>8 Years</p>
+            <Link to={user.handler}>
+              <Card
+                hoverable
+                cover={
+                  <img
+                    alt="example"
+                    src={user.photo}
+                    style={{
+                      objectFit: "cover",
+                      borderRadius: "20px",
+                    }}
+                  />
+                }
+                key={index}
+              >
+                <Meta title={`${user.firstName} ${user.lastName}`} />
+                <p className="jopTitle">{user.jobTitle}</p>
+                <div className="child">
+                  <div className="exp">
+                    <p className="head">Experience</p>
+                    <p style={{ fontWeight: "400" }}>8 Years</p>
+                  </div>
+                  <div className="rate">
+                    <p className="head">Rate</p>
+                    <p>${user.rating}/hr</p>
+                  </div>
                 </div>
-                <div className="rate">
-                  <p className="head">Rate</p>
-                  <p>${user.rating}/hr</p>
+                <div className="skills">
+                  <p>🔥 Free 30-min session</p>
+                  <p>🧑‍🏫 Teaching</p>
+                  <p>💼 Career Mentoring</p>
+                  <p>+10 more...</p>
                 </div>
-              </div>
-              <div className="skills">
-                <p>🔥 Free 30-min session</p>
-                <p>🧑‍🏫 Teaching</p>
-                <p>💼 Career Mentoring</p>
-                <p>+10 more...</p>
-              </div>
-            </Card>
+              </Card>
+            </Link>
           );
         })}
     </div>

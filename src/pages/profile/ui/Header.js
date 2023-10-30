@@ -35,6 +35,7 @@ export default function ProfileHeader({
             company={company}
             topics={topics}
             handler={handler}
+            photo={photo}
           />
         )}
       </div>
