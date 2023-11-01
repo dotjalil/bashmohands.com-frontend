@@ -1,4 +1,4 @@
-.up-div {
+.search {
   display: flex;
 }
 .input {
@@ -73,7 +73,7 @@
   }
 }
 @media (max-width: 992px) {
-  .up-div {
+  .search {
     display: block;
   }
   .input {

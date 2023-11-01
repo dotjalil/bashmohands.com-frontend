@@ -58,7 +58,7 @@ const items = [
 
 export const ProfileHeader = () => {
   return (
-    <div>
+    <div className="profile-header">
       <Dropdown
         menu={{
           items,

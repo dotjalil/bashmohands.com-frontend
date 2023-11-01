@@ -75,48 +75,9 @@ export default function AccountLayout() {
             borderRight: "1px solid #EEEEEE",
           }}
           width={290}
+          className="aside"
         >
-          <Flex vertical={false} style={{ marginBottom: "12px" }}>
-            <Avatar
-              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 75, xxl: 100 }}
-              src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-            />
-            <Flex vertical={true} justify="center">
-              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                Mohamed Abduljalil
-              </div>
-              <Link to="/" style={{ color: "#343434" }}>
-                View profile
-              </Link>
-            </Flex>
-          </Flex>
-          <ConfigProvider
-            theme={{
-              components: {
-                Menu: {
-                  itemSelectedBg: "#fff",
-                  itemHoverBg: "#fff",
-                  itemHoverColor: "#da005c",
-                  itemActiveBg: "#fff",
-                  padding: 0,
-                  iconSize: 24,
-                  fontSize: 20,
-                  iconMarginInlineEnd: 20,
-                },
-              },
-            }}
-          >
-            <Menu
-              mode="inline"
-              inlineIndent={5}
-              style={{ border: "none" }}
-              items={items}
-              defaultSelectedKeys={[`${pathname}`]}
-              onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
-                navigate(key);
-              }}
-            />
-          </ConfigProvider>
+          <AsideCom />
         </Sider>
         <Content
           style={{
@@ -127,6 +88,81 @@ export default function AccountLayout() {
           <Outlet />
         </Content>
       </Layout>
+    </>
+  );
+}
+export function AsideCom() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { user } = useRouteLoaderData("root");
+  console.log("acc nav", pathname);
+  const items = [
+    {
+      label: "Home",
+      key: `/${user.handler}/account`,
+      icon: <HomeOutlined />,
+    },
+    {
+      label: "Sessions",
+      key: `/${user.handler}/account/sessions`,
+      icon: <CalendarOutlined />,
+    },
+    {
+      label: "My Profile",
+      key: `/${user.handler}/account/profile`,
+      icon: <UserOutlined />,
+    },
+    {
+      label: "Settings",
+      key: `/${user.handler}/account/settings`,
+      icon: <SettingOutlined />,
+    },
+  ];
+
+  return (
+    <>
+      <Flex vertical={false} style={{ marginBottom: "12px" }}>
+        <Avatar
+          className="img-avatar"
+          size={{ xs: 50, sm: 50, md: 75, lg: 75, xl: 75, xxl: 100 }}
+          src={user.photo}
+        />
+        <Flex vertical={true} justify="center" className="prof">
+          <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+            {user.firstName + " " + user.lastName}
+          </div>
+          <Link to={"/" + user.handler} style={{ color: "#343434" }}>
+            View profile
+          </Link>
+        </Flex>
+      </Flex>
+      <ConfigProvider
+        theme={{
+          components: {
+            Menu: {
+              itemSelectedBg: "#fff",
+              itemHoverBg: "#fff",
+              itemHoverColor: "#da005c",
+              itemActiveBg: "#fff",
+              padding: 0,
+              iconSize: 24,
+              fontSize: 20,
+              iconMarginInlineEnd: 20,
+            },
+          },
+        }}
+      >
+        <Menu
+          mode="inline"
+          inlineIndent={5}
+          style={{ border: "none" }}
+          items={items}
+          defaultSelectedKeys={[`${pathname}`]}
+          onSelect={({ key, keyPath, selectedKeys, domEvent }) => {
+            navigate(key);
+          }}
+        />
+      </ConfigProvider>
     </>
   );
 }
