@@ -48,8 +48,8 @@ function UpcomingSessions({ openModal }) {
   const [penddingSessions, setPenddingSessions] = useState("");
 
   useEffect(() => {
-    // const baseUrl = `${process.env.REACT_APP_BACKEND_API}session/${user.handler}/pendding`;
-    const baseUrl = `http://localhost:5000/api/session/${user.handler}/pendding`;
+    const baseUrl = `${process.env.REACT_APP_BACKEND_API}session/${user.handler}/pendding`;
+    // const baseUrl = `http://localhost:5000/api/session/${user.handler}/pendding`;
 
     fetch(baseUrl, {
       method: "GET",

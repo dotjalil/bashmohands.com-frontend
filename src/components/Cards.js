@@ -4,6 +4,7 @@ import { Card } from "antd";
 import ResponseDataContext from "../shared/contexts/responseDataContext";
 import { Link } from "react-router-dom";
 import ProfileSkeleton from "../pages/profile/ui/Skeleton";
+import UsersContext from "../shared/contexts/allUsersContext";
 const { Meta } = Card;
 
 export const Cards = () => {
@@ -12,7 +13,8 @@ export const Cards = () => {
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtzcmhnd2RyY2VmeXN5b2duYXR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY5OTYyNjEsImV4cCI6MjAxMjU3MjI2MX0.yVa6x2XVWyDF-Dy5J6XTKLOWVnzG9aoWHmi_jG7g0OY";
   // const supabase = createClient(supabaseUrl, supabaseKey);
 
-  let [users, setUsers] = useState([]);
+  // let [users, setUsers] = useState([]);
+  const { users, setUsers } = useContext(UsersContext);
   const getUsers = () => {
     const baseUrl = `https://bashmohands.onrender.com/api/user/`;
     // const baseUrl = `http://localhost:5000/api/user/`;

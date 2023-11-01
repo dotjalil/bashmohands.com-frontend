@@ -14,8 +14,8 @@ import { Link } from "react-router-dom";
 
 const { user, token } = getAuthData();
 
-// const baseUrl = `${process.env.REACT_APP_BACKEND_API}session`;
-const baseUrl = `http://localhost:5000/api/session`;
+const baseUrl = `${process.env.REACT_APP_BACKEND_API}session`;
+// const baseUrl = `http://localhost:5000/api/session`;
 
 function handleAprroveSession(sessionDetails) {
   fetch(`${baseUrl}/${sessionDetails.id}/approve`, {
