@@ -38,8 +38,8 @@ export default function Account() {
         <Button>Browse Instructors</Button>
       </Link>
       <UpcomingSessions openModal={openModal} />
-      <BookmarkedConnections />
-      <SessionDetails isOpen={isOpen} isClose={closeModal} />
+      {/* <BookmarkedConnections /> */}
+      {/* <SessionDetails isOpen={isOpen} isClose={closeModal} /> */}
     </div>
   );
 }
@@ -62,6 +62,7 @@ function UpcomingSessions({ openModal }) {
       .then((data) => {
         console.log("ddddddddddddddd", data);
         setPenddingSessions([...data.data]);
+        // console.log("pendingsessions", penddingSessions);
       })
       .catch((error) => {
         console.log(error);
@@ -140,7 +141,7 @@ function UpcomingSessions({ openModal }) {
         />
         <Column title="Action" dataIndex="action" key="action" />
       </Table>
-      <BookingReq penddingSessions={penddingSessions} />
+      {penddingSessions && <BookingReq penddingSessions={penddingSessions} />}
     </section>
   );
 }

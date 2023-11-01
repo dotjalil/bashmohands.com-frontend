@@ -10,7 +10,7 @@ export const BookingReq = ({ penddingSessions }) => {
     penddingSessions
   );
   const [isOpen, setIsOpen] = useState(false);
-  const [modelDetails, setModelDetails] = useState();
+  const [modelDetails, setModelDetails] = useState(null);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -35,6 +35,7 @@ export const BookingReq = ({ penddingSessions }) => {
       showDetails: (
         <Button
           onClick={() => {
+            console.log("Session", session);
             openModal();
             setModelDetails(session);
           }}
