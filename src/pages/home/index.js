@@ -2,7 +2,7 @@ import "./index.css";
 // import {  message } from "antd";
 import Search from "../../components/Search";
 // import { useLoaderData } from "react-router-dom";
-import supabase from "../../shared/model/supabaseClient";
+// import supabase from "../../shared/model/supabaseClient";
 // import UserList from "../../components/UserList";
 import { Slider } from "../../components/Slider";
 import { Cards } from "../../components/Cards";
@@ -39,10 +39,11 @@ export default function HomePage() {
 }
 
 export async function homePageLoader() {
-  let { data, error } = await supabase
-    .from("Users")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error) throw new Error("db connection failed");
-  return data;
+  // // let { data, error } = await supabase
+  // //   .from("Users")
+  // //   .select("*")
+  // //   .order("created_at", { ascending: false });
+  // if (error) throw new Error("db connection failed");
+  // return data;
+  return "";
 }

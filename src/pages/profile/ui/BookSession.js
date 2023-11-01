@@ -200,6 +200,7 @@ export default function BookModal({
   company,
   topics,
   handler,
+  photo,
 }) {
   const [bookingState, setBookingState] = useState({
     model: {
@@ -501,9 +502,7 @@ export default function BookModal({
               >
                 <Avatar
                   size={{ xs: 16, sm: 10, md: 20, lg: 80, xl: 85, xxl: 90 }}
-                  src={
-                    "https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-                  }
+                  src={photo}
                 />
                 <Flex vertical={true} justify="center">
                   <div style={{ fontSize: "18px", fontWeight: "bold" }}>
