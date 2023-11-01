@@ -60,7 +60,7 @@
 .topic .main-head {
   margin-bottom: 0;
 }
-.ant-btn-primary {
+.filter-slider .ant-btn-primary {
   background: none !important;
   color: #000;
   border: 1px solid #ddd;
@@ -73,13 +73,13 @@
   border-radius: 12px;
   transition: 0.3s;
 }
-.ant-btn-primary:hover {
+.filter-slider .ant-btn-primary:hover {
   border-color: #da005c;
 }
-.ant-btn-primary:hover span {
+.filter-slider .ant-btn-primary:hover span {
   color: #000;
 }
-.main-btn {
+.result .main-btn {
   background-color: #17080e;
   color: #fff;
   height: 58px;
@@ -96,12 +96,12 @@
   cursor: pointer;
   font-size: 18px;
 }
-.anticon-close svg {
-  background-color: #e3e6ea;
-  padding: 5px;
-  border-radius: 50%;
-  color: #000;
-  font-size: 22px;
+.filter-slider .anticon-close svg {
+  background-color: #e3e6ea !important;
+  padding: 5px !important;
+  border-radius: 50% !important;
+  color: #000 !important;
+  font-size: 22px !important;
 }
 .filters input[type="search"] {
   padding: 0;

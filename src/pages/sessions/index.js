@@ -9,7 +9,7 @@ import AttendeesAvatars from "../../shared/ui/loggedin/AttendeesAvatars";
 import SessionDetails from "../../components/SessionDrawer";
 import { useEffect, useState } from "react";
 import getAuthData from "../../shared/model/getAuthData";
-
+import ProfileSkeleton from "../profile/ui/Skeleton.js";
 const { Column } = Table;
 
 export default function SessionsPage() {
@@ -71,81 +71,27 @@ export default function SessionsPage() {
         },
         status: userSession.status,
         date: userSession.date.split("T")[0],
-        time: userSession.date.split("T")[1],
+        time: userSession.date.split("T")[1].slice(0, 5),
         topics: ["JavaScript", "ReactJS"],
       };
     });
 
-  // const sessions = [
-  //   {
-  //     id: 1,
-  //     instructor: {
-  //       firstName: "Mona",
-  //       handler: "instructorHandler",
-  //       avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=1",
-  //     },
-  //     attendees: [
-  //       {
-  //         firstName: "Mohamed",
-  //         handler: "attendeeHandler",
-  //         // avatar: "attendeeAvatar",
-  //       },
-  //     ],
-  //     status: "pending",
-  //     date: "Sat, 29 Jan 2023",
-  //     time: "12:00-12:30 PM",
-  //     topics: ["JavaScript", "ReactJS"],
-  //   },
-  //   {
-  //     id: 1,
-  //     instructor: {
-  //       firstName: "Maha",
-  //       handler: "instructorHandler",
-  //       avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=2",
-  //     },
-  //     attendees: [
-  //       {
-  //         firstName: "Mohamed",
-  //         handler: "attendeeHandler",
-  //         // avatar: "attendeeAvatar",
-  //       },
-  //     ],
-  //     status: "confirmed",
-  //     date: "Sat, 29 Jan 2023",
-  //     time: "12:00-12:30 PM",
-  //     topics: ["Ajax", "jQuery"],
-  //   },
-  //   {
-  //     id: 1,
-  //     instructor: {
-  //       firstName: "Mansour",
-  //       handler: "instructorHandler",
-  //       avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=3",
-  //     },
-  //     attendees: [
-  //       {
-  //         firstName: "Mohamed",
-  //         handler: "attendeeHandler",
-  //         // avatar: "attendeeAvatar",
-  //       },
-  //     ],
-  //     status: "cancelled",
-  //     date: "Sat, 29 Jan 2023",
-  //     time: "12:00-12:30 PM",
-  //     topics: ["JavaScript", "ReactJS"],
-  //   },
-  // ];
-
   return (
     <>
       <h1>Sessions</h1>
-      <p>You don't have any sessions to attend/give</p>
-      <AllSessions
-        sessions={sessions && sessions}
-        onDetails={drawerOnOff}
-        userState={userState}
-      />
-      <SessionDetails open={open} drawerOnOff={drawerOnOff} />
+      {userSessions.length === 0 ? (
+        <ProfileSkeleton />
+      ) : (
+        <>
+          <p>You don't have any sessions to attend/give</p>
+          <AllSessions
+            sessions={sessions && sessions}
+            onDetails={drawerOnOff}
+            userState={userState}
+          />
+          <SessionDetails open={open} drawerOnOff={drawerOnOff} />
+        </>
+      )}
     </>
   );
 }
@@ -222,18 +168,26 @@ function SessionStatus({ status }) {
       ),
     },
     {
-      status: "deliverd",
+      status: "running",
       element: (
         <Tag icon={<CheckCircleOutlined />} color="success">
-          confirmed
+          approved
         </Tag>
       ),
     },
     {
-      status: "cancelled",
+      status: "deliverd",
+      element: (
+        <Tag icon={<CheckCircleOutlined />} color="success">
+          deliverd
+        </Tag>
+      ),
+    },
+    {
+      status: "canceled",
       element: (
         <Tag icon={<MinusCircleOutlined />} color="error">
-          error
+          Cancelled
         </Tag>
       ),
     },

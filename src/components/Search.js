@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import "./Search.css";
 import { Switch } from "antd";
 import { Filter } from "./FilterSlider";
-import SearchDataContext from "../shared/contexts/searchDataContext";
+import SearchDataContext from "../shared/providers/searchDataContext";
 import ResponseDataContext from "../shared/contexts/responseDataContext";
 
 const Search = () => {
@@ -89,7 +89,7 @@ const Search = () => {
     }
   };
   return (
-    <div className="up-div">
+    <div className="search">
       <div className="input">
         <input
           type="search"

@@ -8,17 +8,20 @@ import {
   useMatches,
   useNavigate,
 } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
-import { Layout, Menu, ConfigProvider, Row, Col, Button } from "antd";
+import { Layout, Menu, ConfigProvider, Row, Col, Drawer } from "antd";
 import { ButtonOutlined, UserHeaderBtn } from "../shared/ui";
 import { ButtonBlack } from "../shared/ui/ButtonBlack";
+import { MenuOutlined } from "@ant-design/icons";
+import AccountLayout, { AsideCom } from "../app/layouts/accountLayout";
 const { Header } = Layout;
 
 const MainNav = () => {
+  const [openMenu, setOpenMenu] = useState(false);
   // Routing progress bar setup
   const navigation = useNavigation();
   const location = useLocation();
@@ -62,6 +65,7 @@ const MainNav = () => {
       }}
     >
       <Header
+        className="header"
         id="baseLayoutHeader"
         theme="light"
         style={{
@@ -83,6 +87,7 @@ const MainNav = () => {
                   src="/bashmohands-logo.svg"
                   width="277"
                   height="auto"
+                  className="logo-img"
                 />
               </Link>
             </div>
@@ -134,6 +139,7 @@ const MainNav = () => {
               justifyContent: "flex-end",
               alignItems: "center",
             }}
+            className="profile-logo"
           >
             {authData && authData.token && authData.user && (
               <UserHeaderBtn
@@ -149,6 +155,34 @@ const MainNav = () => {
                 <ButtonBlack to="/signup">Signup</ButtonBlack>
               </div>
             )}
+          </Col>
+          <Col
+            span={8}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+            className="bars"
+          >
+            <Drawer
+              className="drower"
+              open={openMenu}
+              closable={true}
+              onClose={() => {
+                setOpenMenu(false);
+              }}
+            >
+              <Menu>
+                <AsideCom />
+              </Menu>
+            </Drawer>
+            <MenuOutlined
+              className="bars"
+              onClick={() => {
+                setOpenMenu(true);
+              }}
+            />
           </Col>
         </Row>
       </Header>

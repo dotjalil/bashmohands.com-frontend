@@ -10,16 +10,26 @@ import {
 } from "antd";
 import { Link, useRouteLoaderData } from "react-router-dom";
 import AttendeesAvatars from "../../shared/ui/loggedin/AttendeesAvatars";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SessionDetails from "../../components/SessionDrawer";
+import { BookingReq } from "../../components/BookingReq";
+import getAuthData from "../../shared/model/getAuthData";
 
 const { Column } = Table;
 
+const { user, token } = getAuthData();
 export default function Account() {
   const { user } = useRouteLoaderData("root");
-  const [open, setOpen] = useState(false);
-  const drawerOnOff = () => setOpen(!open);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <div>
       <h1>Welcome 👋</h1>
@@ -27,14 +37,38 @@ export default function Account() {
       <Link to="/">
         <Button>Browse Instructors</Button>
       </Link>
-      <UpcomingSessions drawerOnOff={drawerOnOff} />
+      <UpcomingSessions openModal={openModal} />
       <BookmarkedConnections />
-      <SessionDetails open={open} drawerOnOff={drawerOnOff} />
+      <SessionDetails isOpen={isOpen} isClose={closeModal} />
     </div>
   );
 }
 
-function UpcomingSessions({ drawerOnOff }) {
+function UpcomingSessions({ openModal }) {
+  const [penddingSessions, setPenddingSessions] = useState("");
+
+  useEffect(() => {
+    // const baseUrl = `${process.env.REACT_APP_BACKEND_API}session/${user.handler}/pendding`;
+    const baseUrl = `http://localhost:5000/api/session/${user.handler}/pendding`;
+
+    fetch(baseUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("ddddddddddddddd", data);
+        setPenddingSessions([...data.data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return () => {};
+  }, []);
+
   const sessions = [
     {
       id: 1,
@@ -65,7 +99,7 @@ function UpcomingSessions({ drawerOnOff }) {
       topics: session.topics,
       action: (
         // <Link to={`/session/${session.id}`}>
-        <Button onClick={drawerOnOff}>Session details</Button>
+        <Button onClick={openModal}>Session details</Button>
         // </Link>
       ),
     };
@@ -73,10 +107,17 @@ function UpcomingSessions({ drawerOnOff }) {
   return (
     <section style={{ paddingTop: "35px" }}>
       <Flex align="baseline" justify="space-between">
-        <h2 style={{ color: "#4e4e4e" }}>Upcoming Sessions</h2>
+        <h2 style={{ color: "#4e4e4e" }} className="upcoming">
+          Upcoming Sessions
+        </h2>
         <Link to="/sesssions">All sessions</Link>
       </Flex>
-      <Table dataSource={sessionsData} pagination={false}>
+      <Table
+        dataSource={sessionsData}
+        pagination={false}
+        showHeader={false}
+        scroll={{ x: 580 }}
+      >
         <Column
           style={{ padding: "0" }}
           title="Attendees"
@@ -99,6 +140,7 @@ function UpcomingSessions({ drawerOnOff }) {
         />
         <Column title="Action" dataIndex="action" key="action" />
       </Table>
+      <BookingReq penddingSessions={penddingSessions} />
     </section>
   );
 }
@@ -154,7 +196,9 @@ function BookmarkedConnections() {
   return (
     <section style={{ paddingTop: "35px" }}>
       <Flex align="baseline" justify="space-between">
-        <h2 style={{ color: "#4e4e4e" }}>Bookmarked connections</h2>
+        <h2 style={{ color: "#4e4e4e" }} className="bookmarked">
+          Bookmarked connections
+        </h2>
         <Link to="/sesssions">Find instructor</Link>
       </Flex>
       <ConfigProvider
@@ -169,7 +213,12 @@ function BookmarkedConnections() {
           },
         }}
       >
-        <Table dataSource={usersData} showHeader={false} pagination={false}>
+        <Table
+          dataSource={usersData}
+          showHeader={false}
+          pagination={false}
+          scroll={{ x: 580 }}
+        >
           <Column
             style={{ padding: "0" }}
             title="User Details"
