@@ -144,6 +144,8 @@
     display: block;
     position: absolute;
     top: 50%;
+    transform: translateY(-70%);
+    left: 0;
   }
   .img {
     width: 200px;

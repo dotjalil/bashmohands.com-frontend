@@ -1,4 +1,4 @@
-.ant-menu-horizontal {
+.header .ant-menu-horizontal {
   border-bottom: none;
 }
 
@@ -7,21 +7,63 @@
 */
 
 /* Make clicks pass-through */
-#nprogress .bar {
+.header #nprogress .bar {
   background: #da005c !important;
 }
 
 /* Fancy blur effect */
-#nprogress .peg {
+.header #nprogress .peg {
   box-shadow: 0 0 10px #da005c, 0 0 5px #da005c !important;
 }
 
-#nprogress .spinner-icon {
+.header #nprogress .spinner-icon {
   border-top-color: #da005c !important;
   border-left-color: #da005c !important;
 }
 
-.authHeaderBtns {
+.header .authHeaderBtns {
   display: flex;
   gap: 20px;
+}
+.header .logo-img {
+  max-width: 100%;
+}
+.header .bars {
+  display: none;
+}
+@media (max-width: 992px) {
+  .header {
+    height: 50px;
+  }
+  .header .ant-menu-light {
+    background: none !important;
+  }
+  .header .ant-row {
+    position: relative;
+    top: -23px;
+  }
+  .header .profile-logo {
+    display: none !important;
+  }
+  .header .bars svg {
+    font-size: 18px;
+  }
+  .header .bars {
+    display: flex;
+  }
+  .prof {
+    gap: 25px !important;
+    margin-left: 10px;
+  }
+  .aside {
+    display: none;
+  }
+  .drower .ant-menu-light.ant-menu-root.ant-menu-vertical {
+    border: none;
+  }
+}
+@media (max-width: 767px) {
+  .header .ant-row {
+    top: -5px;
+  }
 }

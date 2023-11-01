@@ -1,0 +1,18 @@
+.table-img {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.table-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.booking-table tr.ant-table-row .ant-table-cell-row-hover {
+  background: none !important;
+}
+.booking-table .ant-table-row-level-0 {
+  background-color: #fff1f0;
+}

@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Modal, Select, Space, Form } from "antd";
 import "./FilterSlider.css";
 import ResponseDataContext from "../shared/contexts/responseDataContext";
+import FiltersContext from "../shared/contexts/filtersContext";
 const { Option } = Select;
 
 export const Filter = () => {
   const [form] = Form.useForm();
 
   const { searchData, setsearchData } = useContext(ResponseDataContext);
+  const { filtersData, setFiltersData } = useContext(FiltersContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,6 +23,10 @@ export const Filter = () => {
   const [getTopic, setTopic] = useState([]);
   const [getCountry, setCountry] = useState([]);
   const [getGender, setGender] = useState([]);
+
+  function manipulatedTopicsData() {
+    return filtersData.map((filter) => ({ value: filter, label: filter }));
+  }
   useEffect(() => {
     setSelectedValues([]);
   }, []);
@@ -45,6 +51,7 @@ export const Filter = () => {
       { country: getCountry },
       { gender: getGender }
     );
+    console.log("🚀 ~ file: FilterSlider.js:48 ~ result ~ output:", output);
     const baseUrl = `https://bashmohands.onrender.com/api/user/filter`;
     // const baseUrl = `http://localhost:5000/api/user/filter`;
     fetch(baseUrl, {
@@ -73,7 +80,6 @@ export const Filter = () => {
       });
 
     handleCancel();
-    console.log(output);
   };
 
   const clear = () => {
@@ -96,7 +102,7 @@ export const Filter = () => {
     });
   };
   return (
-    <div>
+    <div className="filter-slider">
       <Button type="primary" onClick={showModal}>
         <img src="imgs/1.svg" alt="" />
         Filters
@@ -181,16 +187,7 @@ export const Filter = () => {
                       prevSort.filter((item) => item !== value)
                     );
                   }}
-                  options={[
-                    {
-                      value: "Topic 1",
-                      label: "Topic 1",
-                    },
-                    {
-                      value: "Topic 2",
-                      label: "Topic 2",
-                    },
-                  ]}
+                  options={filtersData && manipulatedTopicsData()}
                 />
               </Space>
             </div>
