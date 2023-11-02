@@ -4,7 +4,9 @@ import { Switch } from "antd";
 import { Filter } from "./FilterSlider";
 import SearchDataContext from "../shared/providers/searchDataContext";
 import ResponseDataContext from "../shared/contexts/responseDataContext";
+import getAuthData from "../shared/model/getAuthData";
 
+const { user, token } = getAuthData();
 const Search = () => {
   const [searchQuery, setsearchQuery] = useState("");
   // const [responseData, setResponseData] = useState(null);
@@ -41,12 +43,13 @@ const Search = () => {
 
   const handleShowInstructorsBtn = (checked) => {
     if (checked) {
-      const baseUrl = `https://bashmohands.onrender.com/api/user/instructors`;
-      // const baseUrl = `http://localhost:5000/api/user/instructors`;
+      // const baseUrl = `https://bashmohands.onrender.com/api/user/instructors`;
+      const baseUrl = `http://localhost:5000/api/user/instructors`;
       fetch(baseUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())

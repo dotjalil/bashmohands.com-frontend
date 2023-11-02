@@ -16,8 +16,8 @@ export const Cards = () => {
   // let [users, setUsers] = useState([]);
   const { users, setUsers } = useContext(UsersContext);
   const getUsers = () => {
-    const baseUrl = `https://bashmohands.onrender.com/api/user/`;
-    // const baseUrl = `http://localhost:5000/api/user/`;
+    const baseUrl = `https://bashmohands.onrender.com/api/user?page=1&limit=12`;
+    // const baseUrl = `http://localhost:5000/api/user/page=1&limit=12`;
     fetch(baseUrl, {
       method: "GET",
       headers: {
@@ -68,14 +68,21 @@ export const Cards = () => {
                   <Meta title={`${user.firstName} ${user.lastName}`} />
                   <p className="jopTitle">{user.jobTitle}</p>
                   <div className="child">
-                    <div className="exp">
-                      <p className="head">Experience</p>
-                      <p style={{ fontWeight: "400" }}>8 Years</p>
-                    </div>
-                    <div className="rate">
-                      <p className="head">Rate</p>
-                      <p>${user.rating}/hr</p>
-                    </div>
+                    {user.experience && (
+                      <>
+                        {" "}
+                        <div className="exp">
+                          <p className="head">Experience</p>
+                          <p style={{ fontWeight: "400" }}>
+                            {user.experience?.slice(0, 1)} Years
+                          </p>
+                        </div>
+                        <div className="rate">
+                          <p className="head">Rate</p>
+                          <p>${user.rating}/hr</p>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="skills">
                     <p>🔥 Free 30-min session</p>

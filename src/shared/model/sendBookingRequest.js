@@ -1,3 +1,6 @@
+import getAuthData from "./getAuthData";
+
+const { user, token } = getAuthData();
 export default function sendBookingRequest({
   instructorHandler,
   clientHandler,
@@ -5,11 +8,14 @@ export default function sendBookingRequest({
   notes,
 }) {
   // Request to server
-  return fetch(`${process.env.REACT_APP_BACKEND_API}session/book`, {
+  console.log(date);
+  return fetch(`http://localhost:5000/api/session/book`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
+
     body: JSON.stringify({
       instructorHandler,
       clientHandler,

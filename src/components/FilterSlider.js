@@ -52,8 +52,8 @@ export const Filter = () => {
       { gender: getGender }
     );
     console.log("🚀 ~ file: FilterSlider.js:48 ~ result ~ output:", output);
-    const baseUrl = `https://bashmohands.onrender.com/api/user/filter`;
-    // const baseUrl = `http://localhost:5000/api/user/filter`;
+    // const baseUrl = `https://bashmohands.onrender.com/api/user/filter`;
+    const baseUrl = `http://localhost:5000/api/user/filter`;
     fetch(baseUrl, {
       method: "POST",
       headers: {
@@ -146,20 +146,24 @@ export const Filter = () => {
                   }}
                   options={[
                     {
-                      value: "Sort by hourly rate",
-                      label: "Sort by hourly rate",
+                      value: "lowest hourly rate",
+                      label: "lowest hourly rate",
                     },
                     {
-                      value: "Highest review",
-                      label: "Highest review",
+                      value: "highest hourly rate",
+                      label: "highest hourly rate",
                     },
                     {
-                      value: "Availability",
-                      label: "Availability",
+                      value: "highest review",
+                      label: "highest review",
                     },
                     {
-                      value: "Highest experience",
-                      label: "Highest experience",
+                      value: "highest availability",
+                      label: "highest availability",
+                    },
+                    {
+                      value: "highest experience",
+                      label: "highest experience",
                     },
                   ]}
                 />

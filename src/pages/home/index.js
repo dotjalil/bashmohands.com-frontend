@@ -7,16 +7,12 @@ import Search from "../../components/Search";
 import { Slider } from "../../components/Slider";
 import { Cards } from "../../components/Cards";
 import { Pagination } from "antd";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import UsersContext from "../../shared/contexts/allUsersContext";
 
 export default function HomePage() {
   const { users, setUsers } = useContext(UsersContext);
-  let allUsers = useRef("");
-
-  useEffect(() => {
-    allUsers.current = users;
-  }, []);
+  const [dbLength, setdbLength] = useState("");
 
   // const [messageApi, contextHolder] = message.useMessage();
   // const users = useLoaderData();
@@ -32,6 +28,29 @@ export default function HomePage() {
   //   });
   // }
 
+  useEffect(() => {
+    const baseUrl = `https://bashmohands.onrender.com/api/user`;
+    // const baseUrl = `http://localhost:5000/api/user/page=1&limit=12`;
+    fetch(baseUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data as needed
+        setdbLength(data.data.length);
+        console.log(
+          "🚀 ~ file: index.js:44 ~ .then ~ data.data.dbLength:",
+          data.data.length
+        );
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
   return (
     <div style={{ paddingTop: "65px" }}>
       <h1
@@ -44,11 +63,10 @@ export default function HomePage() {
       <Slider />
       <Cards />
       {/* <button className="card-btn">Load more instructors</button> */}
-      {console.log(allUsers && allUsers.length)}
       <Pagination
-        style={{ marginBlock: 50, marginInlineStart: "30%" }}
+        style={{ marginBlock: 50, marginInlineStart: "40%" }}
         defaultCurrent={1}
-        total={100}
+        total={dbLength}
         defaultPageSize={12}
         onChange={(pageNumber) => {
           getNextPage(pageNumber);
@@ -58,7 +76,7 @@ export default function HomePage() {
   );
 
   async function getNextPage(pageNumber) {
-    const baseUrl = `https://bashmohands.onrender.com/api/user/?page=${pageNumber}&limit=${12}`;
+    const baseUrl = `https://bashmohands.onrender.com/api/user/?page=${pageNumber}&limit=12`;
     // const baseUrl = `http://localhost:5000/api/user/?page=${pageNumber}&limit=${12}`;
     fetch(baseUrl, {
       method: "GET",

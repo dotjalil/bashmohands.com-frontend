@@ -140,7 +140,10 @@ function UpcomingSessions({ openModal }) {
         />
         <Column title="Action" dataIndex="action" key="action" />
       </Table>
-      <BookingReq penddingSessions={penddingSessions} />
+      {console.log("User Topic", user)}
+      {user.role === "INSTRUCTOR" && (
+        <BookingReq penddingSessions={penddingSessions} />
+      )}
     </section>
   );
 }

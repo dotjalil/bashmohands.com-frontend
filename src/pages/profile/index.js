@@ -36,6 +36,7 @@ const ProfilePage = () => {
                   company={"Vodafone"}
                   handler={profileData.handler}
                   isMine={profileData.isMine}
+                  role={profileData.role}
                 />
                 <About bio={profileData.bio} />
               </Content>

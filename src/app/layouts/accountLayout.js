@@ -27,33 +27,6 @@ import { Link } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 
 export default function AccountLayout() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { user } = useRouteLoaderData("root");
-  console.log("acc nav", pathname);
-  const items = [
-    {
-      label: "Home",
-      key: `/${user.handler}/account`,
-      icon: <HomeOutlined />,
-    },
-    {
-      label: "Sessions",
-      key: `/${user.handler}/account/sessions`,
-      icon: <CalendarOutlined />,
-    },
-    {
-      label: "My Profile",
-      key: `/${user.handler}/account/update`,
-      icon: <UserOutlined />,
-    },
-    {
-      label: "Settings",
-      key: `/${user.handler}/account/settings`,
-      icon: <SettingOutlined />,
-    },
-  ];
-
   return (
     <>
       <Layout
@@ -109,7 +82,7 @@ export function AsideCom() {
     },
     {
       label: "My Profile",
-      key: `/${user.handler}/account/profile`,
+      key: `/${user.handler}/account/update`,
       icon: <UserOutlined />,
     },
     {

@@ -65,6 +65,7 @@ export default function SessionDetails({ isOpen, isClose, sessionDetails }) {
     "🚀 ~ file: SessionDrawer.js:13 ~ SessionDetails ~ sessionDetails:",
     sessionDetails
   );
+  console.log("session topic", sessionDetails);
   const items = [
     {
       label: "Time",
@@ -177,7 +178,8 @@ export default function SessionDetails({ isOpen, isClose, sessionDetails }) {
               </div>
               <div className="topic">
                 <p>Topics</p>
-                <span>{sessionDetails.topics}</span>
+                {/* Faulty code */}
+                <span>{sessionDetails.Client.topics}</span>
               </div>
               <div className="status">
                 <p>Status</p>
