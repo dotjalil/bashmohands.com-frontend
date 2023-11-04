@@ -11,7 +11,6 @@ import SignupPage, { signupAction } from "./pages/signup";
 import LoginPage, { loginFormAction } from "./pages/login";
 import ProfileSettingsPage from "./pages/myProfile";
 import AccountSettingsPage from "./pages/accountSettings";
-
 import {
   checkAuthLoader,
   isAuthMineLoader,
