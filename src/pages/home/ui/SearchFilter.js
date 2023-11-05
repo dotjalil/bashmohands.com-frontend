@@ -28,6 +28,8 @@ export default function SearchFilter({ filters }) {
 
   let timers = [];
 
+  useEffect(() => {}, [query]);
+
   const handleSearchInput = (e) => {
     setQuery(e.target.value);
     const filterObj = {

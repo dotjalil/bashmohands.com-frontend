@@ -22,6 +22,7 @@ import ProfileLayout from "./app/layouts/profileLayout";
 
 import UpdatePage from "./pages/updateProfile/update";
 import FormUpdate from "./pages/updateProfile/update2";
+import ThankYouPage, { thankYouPageLoader } from "./pages/thankyou";
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "/thankyou", element: <ThankYouPage />, loader: thankYouPageLoader },
 ]);
 
 function App() {
